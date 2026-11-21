@@ -79,11 +79,11 @@ async function startServer() {
   }
 
   app.listen(PORT, '0.0.0.0', () => {
-    console.log(`PinVault server listening on http://0.0.0.0:${PORT}`);
+    console.log(`KikPin server listening on http://0.0.0.0:${PORT}`);
   });
 }
 
 startServer().catch((err) => {
-  console.error('Failed to start PinVault server:', err);
+  console.error('Failed to start KikPin server:', err);
   process.exit(1);
 });

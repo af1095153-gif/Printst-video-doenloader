@@ -4,6 +4,7 @@ import { UrlExtractorBar } from './components/UrlExtractorBar';
 import { MediaResultCard } from './components/MediaResultCard';
 import {
   FaqSection,
+  HowToSection,
   RecentHistorySection,
   SupportedFormatsSection,
 } from './components/InfoSections';
@@ -149,11 +150,11 @@ export default function App() {
             Video Pins · Idea Pins · Original Images
           </p>
           <h1 className="mt-2.5 text-3xl font-extrabold tracking-[-0.015em] text-white sm:text-5xl text-balance">
-            Save Pinterest videos and HD media straight to your device
+            KikPin – Pinterest Video, Image &amp; GIF Downloader
           </h1>
           <p className="mt-3.5 max-w-2xl text-base leading-relaxed text-zinc-400">
-            Paste any desktop Pin URL, mobile share link, or shortened{' '}
-            <span className="font-mono text-sm text-zinc-200">pin.it</span> link to extract MP4 videos, multi-slide Idea Pins, and full-resolution images.
+            Save public Pinterest videos, reels, images, GIFs, and carousels—including{' '}
+            <span className="font-mono text-sm text-zinc-200">pin.it</span> links—in the source quality Pinterest provides (HD, 2K, or 4K when available). No watermark or login credentials required.
           </p>
 
           <div className="mt-7">
@@ -182,6 +183,7 @@ export default function App() {
           onReset={handleClear}
         />
 
+        <HowToSection />
         <SupportedFormatsSection />
 
         <RecentHistorySection
@@ -195,8 +197,8 @@ export default function App() {
 
       <footer className="border-t border-white/10 py-6">
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 text-xs text-zinc-500 sm:flex-row sm:items-center sm:justify-between sm:px-6">
-          <p>PinVault — Fast Pinterest media extraction with zero API keys.</p>
-          <p>Respect creator copyrights. Download media only for personal use or with permission.</p>
+          <p>KikPin — Free Pinterest video, image, and GIF downloader.</p>
+          <p>KikPin is independent and not affiliated with Pinterest. Download only content you own or have permission to save.</p>
         </div>
       </footer>
     </div>
