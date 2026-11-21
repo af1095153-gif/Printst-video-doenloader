@@ -2,6 +2,24 @@ import { Film, Image as ImageIcon, Layers, RotateCcw, Trash2 } from 'lucide-reac
 import type { HistoryItem } from '../types/pinterest';
 import { formatShortHost } from '../utils/pinterestClient';
 
+export function HowToSection() {
+  return (
+    <section className="mt-16 border-t border-white/10 pt-12">
+      <h2 className="text-xl sm:text-2xl font-bold tracking-[-0.01em] text-white">How to download from Pinterest</h2>
+      <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+        <article className="rounded-2xl border border-white/10 bg-[#141418] p-6">
+          <h3 className="text-base font-semibold text-white">Mobile app</h3>
+          <p className="mt-2 text-sm leading-relaxed text-zinc-400">Open the pin in the Pinterest app, tap •••, choose Copy Link, paste the link into KikPin, then select Download.</p>
+        </article>
+        <article className="rounded-2xl border border-white/10 bg-[#141418] p-6">
+          <h3 className="text-base font-semibold text-white">Desktop browser</h3>
+          <p className="mt-2 text-sm leading-relaxed text-zinc-400">Copy the pin URL from your browser, paste it into KikPin, select Download, and save the file to your Downloads folder.</p>
+        </article>
+      </div>
+    </section>
+  );
+}
+
 export function SupportedFormatsSection() {
   const formats = [
     {
@@ -28,10 +46,10 @@ export function SupportedFormatsSection() {
     <section id="formats" className="mt-16 border-t border-white/10 pt-12">
       <div className="max-w-2xl">
         <h2 className="text-xl sm:text-2xl font-bold tracking-[-0.01em] text-white">
-          Built for every Pinterest media format
+          Supported media and devices
         </h2>
         <p className="mt-2 text-sm text-zinc-400">
-          Four-layer extraction handles desktop links, mobile share URLs, HLS streams, and multi-page carousels automatically.
+          Download public Pinterest videos and reels, images, GIFs, Story and Idea pins, carousels, and shortened pin.it links. KikPin works in browsers on Android, iOS and iPhone, and desktop.
         </p>
       </div>
 
@@ -130,16 +148,24 @@ export function RecentHistorySection({
 export function FaqSection() {
   const faqs = [
     {
-      q: 'Does it work with shortened pin.it mobile share links?',
-      a: 'Yes. Short links like pin.it/... and invite links with ?invite_code= parameters are resolved server-side, cleaned of tracking parameters, and parsed cleanly.',
+      q: 'How do I download videos, images, and GIFs from Pinterest?',
+      a: 'Copy the link to a public pin, paste it into KikPin, and choose the available download. On mobile, tap ••• in Pinterest and select Copy Link; on desktop, copy the pin URL from your browser.',
     },
     {
-      q: 'Why does the download button stream through /api/download?',
-      a: 'Direct links to pinimg.com open inline in many browsers. Our stream proxy sets Content-Disposition attachment headers so videos and images save straight to your device.',
+      q: 'Do I need a Pinterest account or login?',
+      a: 'No. You do not need a KikPin account or Pinterest login to download public pins.',
     },
     {
-      q: 'Are any API keys or accounts required?',
-      a: 'No. Extraction runs completely statelessly with zero API keys, logins, or tracking cookies.',
+      q: 'Where are downloaded files saved?',
+      a: 'Files go to your device’s default Downloads folder, unless your browser asks you to choose a different location.',
+    },
+    {
+      q: 'Can private or deleted pins be downloaded?',
+      a: 'No. Private, deleted, or otherwise unavailable pins cannot be accessed by KikPin.',
+    },
+    {
+      q: 'Is KikPin affiliated with Pinterest?',
+      a: 'KikPin is an independent tool and is not affiliated with Pinterest. Only download content you own or have permission to save.',
     },
   ];
 

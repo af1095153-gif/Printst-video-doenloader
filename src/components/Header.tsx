@@ -17,9 +17,9 @@ export function Header({ onPasteAction }: HeaderProps) {
             aria-hidden="true"
             className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#E60023] text-sm font-extrabold text-white"
           >
-            P
+            K
           </span>
-          <span>PinVault</span>
+          <span>KikPin</span>
         </a>
 
         {/* Zone 2: Clean single-line text navigation links */}
