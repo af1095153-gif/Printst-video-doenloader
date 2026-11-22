@@ -16,8 +16,10 @@ import {
   saveHistory,
   validatePinUrlInput,
 } from './utils/pinterestClient';
+import { getSeoPage, updateDocumentMetadata } from './seoPages';
 
 export default function App() {
+  const seoPage = getSeoPage(window.location.pathname);
   const [urlInput, setUrlInput] = useState('');
   const [status, setStatus] = useState<ExtractionStatus>('idle');
   const [result, setResult] = useState<PinMediaResult | null>(null);
@@ -30,6 +32,10 @@ export default function App() {
   useEffect(() => {
     setHistory(loadHistory());
   }, []);
+
+  useEffect(() => {
+    if (seoPage) updateDocumentMetadata(seoPage);
+  }, [seoPage?.pathname]);
 
   const runExtraction = async (urlOverride?: string) => {
     const rawTarget = typeof urlOverride === 'string' ? urlOverride : urlInput;
@@ -147,14 +153,18 @@ export default function App() {
         {/* Hero Extractor Workspace */}
         <section id="downloader" className="max-w-4xl">
           <p className="text-xs font-semibold tracking-wide text-[#FF3B53]">
-            Video Pins · Idea Pins · Original Images
+            {seoPage?.eyebrow || 'Video Pins · Idea Pins · Original Images'}
           </p>
           <h1 className="mt-2.5 text-3xl font-extrabold tracking-[-0.015em] text-white sm:text-5xl text-balance">
-            KikPin – Pinterest Video, Image &amp; GIF Downloader
+            {seoPage?.h1 || 'KikPin – Pinterest Video, Image & GIF Downloader'}
           </h1>
           <p className="mt-3.5 max-w-2xl text-base leading-relaxed text-zinc-400">
-            Save public Pinterest videos, reels, images, GIFs, and carousels—including{' '}
-            <span className="font-mono text-sm text-zinc-200">pin.it</span> links—in the source quality Pinterest provides (HD, 2K, or 4K when available). No watermark or login credentials required.
+            {seoPage?.lead || (
+              <>
+                Save public Pinterest videos, reels, images, GIFs, and carousels—including{' '}
+                <span className="font-mono text-sm text-zinc-200">pin.it</span> links—in the source quality Pinterest provides (HD, 2K, or 4K when available). No watermark or login credentials required.
+              </>
+            )}
           </p>
 
           <div className="mt-7">
@@ -182,6 +192,33 @@ export default function App() {
           onRetry={() => runExtraction()}
           onReset={handleClear}
         />
+
+        {seoPage && (
+          <section className="mt-16 border-t border-white/10 pt-12">
+            <h2 className="text-xl font-bold tracking-[-0.01em] text-white sm:text-2xl">
+              {seoPage.sectionTitle}
+            </h2>
+            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-zinc-400">
+              {seoPage.sectionIntro}
+            </p>
+            <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-3">
+              {seoPage.topics.map((topic) => (
+                <article key={topic.title} className="rounded-2xl border border-white/10 bg-[#141418] p-6">
+                  <h3 className="text-base font-semibold text-white">{topic.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-zinc-400">{topic.description}</p>
+                </article>
+              ))}
+            </div>
+            {seoPage.pathname === '/how-to-download-pinterest-videos' && (
+              <div className="mt-8 rounded-2xl border border-white/10 bg-[#141418] p-6">
+                <h3 className="text-base font-semibold text-white">Troubleshooting pin.it links and private Pins</h3>
+                <p className="mt-2 text-sm leading-relaxed text-zinc-400">
+                  If a pin.it link does not open, copy it again from the Pinterest share menu or paste the full destination URL. KikPin cannot save private Pins, deleted Pins, or content whose owner has restricted access. Only public Pins and content you own or are permitted to use can be downloaded.
+                </p>
+              </div>
+            )}
+          </section>
+        )}
 
         <HowToSection />
         <SupportedFormatsSection />
