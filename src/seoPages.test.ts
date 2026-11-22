@@ -65,3 +65,33 @@ test('Vercel static assets have immutable caching without changing protected fil
   assert.ok(vercel.includes('robots'));
   assert.ok(vercel.includes('sitemap'));
 });
+
+test('llms.txt starts with KikPin and links to all five main pages', () => {
+  const llms = readFileSync(new URL('../public/llms.txt', import.meta.url), 'utf8');
+  assert.match(llms, /^# KikPin/m);
+  for (const url of [
+    'https://kikpin.me/',
+    'https://kikpin.me/pinterest-video-downloader',
+    'https://kikpin.me/pinterest-image-downloader',
+    'https://kikpin.me/pinterest-gif-downloader',
+    'https://kikpin.me/how-to-download-pinterest-videos',
+  ]) {
+    assert.ok(llms.includes(url));
+  }
+});
+
+test('Google Fonts load asynchronously with swap and are limited to used weights', () => {
+  const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  assert.match(html, /rel="preload"/);
+  assert.match(html, /as="style"/);
+  assert.match(html, /onload=/);
+  assert.match(html, /<noscript>/);
+  assert.match(html, /&amp;display=swap/);
+  assert.doesNotMatch(html, /400\.\.700|wght@500;600;700;800/);
+});
+
+test('Vercel SPA rewrite does not capture static file extensions', () => {
+  const vercel = readFileSync(new URL('../vercel.json', import.meta.url), 'utf8');
+  assert.match(vercel, /\\\.\[\^\/\]\+\$/);
+  assert.doesNotMatch(vercel, /robots\\\.txt\|sitemap\\\.xml/);
+});
