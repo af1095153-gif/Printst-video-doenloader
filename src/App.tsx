@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { Star } from 'lucide-react';
 import { Header } from './components/Header';
 import { UrlExtractorBar } from './components/UrlExtractorBar';
 import { MediaResultCard } from './components/MediaResultCard';
@@ -172,6 +173,22 @@ export default function App() {
             />
           </div>
         </section>
+
+        <div className="mt-5">
+          <a
+            href="https://www.trustpilot.com/review/kikpin.me"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex max-w-full items-center gap-2.5 rounded-full border border-white/10 bg-[#141418] px-4 py-2.5 text-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-[#00b67a]/50 hover:bg-[#19191e] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00b67a]"
+          >
+            <span aria-hidden="true" className="flex shrink-0 items-center gap-0.5 text-[#00b67a]">
+              {Array.from({ length: 5 }, (_, index) => (
+                <Star key={index} className="size-3.5 fill-current sm:size-4" strokeWidth={1.5} />
+              ))}
+            </span>
+            <span className="font-medium text-zinc-200">Rated 5.0 / 5 on Trustpilot</span>
+          </a>
+        </div>
 
         {/* Loading, Error, or Extracted Media Workbench */}
         <MediaResultCard
