@@ -1,0 +1,9 @@
+# KikPin
+
+KikPin is a free, no-login Pinterest downloader for public videos, images, GIFs, reels, and carousels. Paste a Pinterest or pin.it link to preview and download the available original-quality media.
+
+- [KikPin homepage](https://kikpin.me/)
+- [Pinterest Video Downloader](https://kikpin.me/pinterest-video-downloader)
+- [Pinterest Image Downloader](https://kikpin.me/pinterest-image-downloader)
+- [Pinterest GIF Downloader](https://kikpin.me/pinterest-gif-downloader)
+- [How to Download Pinterest Videos](https://kikpin.me/how-to-download-pinterest-videos)

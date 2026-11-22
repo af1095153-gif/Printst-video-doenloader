@@ -1,16 +1,17 @@
+import { memo } from 'react';
 import { ClipboardPaste } from 'lucide-react';
 
 interface HeaderProps {
   onPasteAction: () => void;
 }
 
-export function Header({ onPasteAction }: HeaderProps) {
+export const Header = memo(function Header({ onPasteAction }: HeaderProps) {
   return (
     <header className="sticky top-0 z-30 h-14 border-b border-white/10 bg-[#0B0B0E]/90 backdrop-blur-md">
       <div className="mx-auto flex h-full max-w-6xl items-center justify-between gap-8 px-4 sm:px-6">
         {/* Zone 1: Single-line Brand Wordmark */}
         <a
-          href="#downloader"
+          href="/"
           className="flex shrink-0 items-center gap-2.5 text-lg font-bold tracking-tight text-white whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E60023] rounded-md"
         >
           <span
@@ -28,28 +29,28 @@ export function Header({ onPasteAction }: HeaderProps) {
           className="hidden md:flex items-center gap-7 text-sm font-medium text-zinc-400"
         >
           <a
-            href="#downloader"
+            href="/pinterest-video-downloader"
             className="whitespace-nowrap shrink-0 transition-colors hover:text-white hover:underline underline-offset-4"
           >
-            Downloader
+            Video
           </a>
           <a
-            href="#formats"
+            href="/pinterest-image-downloader"
             className="whitespace-nowrap shrink-0 transition-colors hover:text-white hover:underline underline-offset-4"
           >
-            Formats
+            Images
           </a>
           <a
-            href="#recent"
+            href="/pinterest-gif-downloader"
             className="whitespace-nowrap shrink-0 transition-colors hover:text-white hover:underline underline-offset-4"
           >
-            Recent
+            GIF
           </a>
           <a
-            href="#faq"
+            href="/how-to-download-pinterest-videos"
             className="whitespace-nowrap shrink-0 transition-colors hover:text-white hover:underline underline-offset-4"
           >
-            FAQ
+            Guide
           </a>
         </nav>
 
@@ -67,4 +68,4 @@ export function Header({ onPasteAction }: HeaderProps) {
       </div>
     </header>
   );
-}
+});

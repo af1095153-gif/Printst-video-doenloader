@@ -72,7 +72,17 @@ async function startServer() {
     app.use(vite.middlewares);
   } else {
     const distDir = path.join(__dirname, 'dist');
-    app.use(express.static(distDir));
+    app.use(express.static(distDir, {
+      setHeaders(res, filePath) {
+        if (filePath.includes(`${path.sep}assets${path.sep}`)) {
+          res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+        } else if (filePath.endsWith(`${path.sep}robots.txt`) || filePath.endsWith(`${path.sep}sitemap.xml`)) {
+          res.setHeader('Cache-Control', 'public, max-age=3600');
+        } else {
+          res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
+        }
+      },
+    }));
     app.get('*', (_req, res) => {
       res.sendFile(path.join(distDir, 'index.html'));
     });

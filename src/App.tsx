@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { Star } from 'lucide-react';
 import { Header } from './components/Header';
 import { UrlExtractorBar } from './components/UrlExtractorBar';
@@ -17,8 +17,15 @@ import {
   saveHistory,
   validatePinUrlInput,
 } from './utils/pinterestClient';
+import { getSeoPage, updateDocumentMetadata } from './seoPages';
+
+const VideoSeoPage = lazy(() => import('./components/seoPages/VideoSeoPage'));
+const ImageSeoPage = lazy(() => import('./components/seoPages/ImageSeoPage'));
+const GifSeoPage = lazy(() => import('./components/seoPages/GifSeoPage'));
+const DownloadGuideSeoPage = lazy(() => import('./components/seoPages/DownloadGuideSeoPage'));
 
 export default function App() {
+  const seoPage = getSeoPage(window.location.pathname);
   const [urlInput, setUrlInput] = useState('');
   const [status, setStatus] = useState<ExtractionStatus>('idle');
   const [result, setResult] = useState<PinMediaResult | null>(null);
@@ -32,7 +39,11 @@ export default function App() {
     setHistory(loadHistory());
   }, []);
 
-  const runExtraction = async (urlOverride?: string) => {
+  useEffect(() => {
+    if (seoPage) updateDocumentMetadata(seoPage);
+  }, [seoPage?.pathname]);
+
+  const runExtraction = useCallback(async (urlOverride?: string) => {
     const rawTarget = typeof urlOverride === 'string' ? urlOverride : urlInput;
     if (typeof urlOverride === 'string') {
       setUrlInput(urlOverride);
@@ -83,9 +94,9 @@ export default function App() {
       setResult(null);
       setErrorMessage('Network error while contacting the extractor. Please try again.');
     }
-  };
+  }, [urlInput]);
 
-  const handlePasteFromClipboard = async () => {
+  const handlePasteFromClipboard = useCallback(async () => {
     setClipboardNotice(null);
     const inputEl = document.getElementById('pin-url-input') as HTMLInputElement | null;
 
@@ -116,29 +127,29 @@ export default function App() {
       setClipboardNotice('Browser blocked clipboard read. Click inside the box and press Ctrl+V or Cmd+V.');
       inputEl?.focus();
     }
-  };
+  }, [runExtraction]);
 
-  const handleClear = () => {
+  const handleClear = useCallback(() => {
     activeRequestIdRef.current += 1;
     setUrlInput('');
     setClipboardNotice(null);
     setStatus('idle');
     setResult(null);
     setErrorMessage(null);
-  };
+  }, []);
 
-  const handleSelectHistoryItem = (item: HistoryItem) => {
+  const handleSelectHistoryItem = useCallback((item: HistoryItem) => {
     setUrlInput(item.sourceUrl);
     setResult(item);
     setErrorMessage(null);
     setStatus('success');
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  }, []);
 
-  const handleClearHistory = () => {
+  const handleClearHistory = useCallback(() => {
     clearStoredHistory();
     setHistory([]);
-  };
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#0B0B0E] text-[#F4F4F6]">
@@ -148,14 +159,18 @@ export default function App() {
         {/* Hero Extractor Workspace */}
         <section id="downloader" className="max-w-4xl">
           <p className="text-xs font-semibold tracking-wide text-[#FF3B53]">
-            Video Pins · Idea Pins · Original Images
+            {seoPage?.eyebrow || 'Video Pins · Idea Pins · Original Images'}
           </p>
           <h1 className="mt-2.5 text-3xl font-extrabold tracking-[-0.015em] text-white sm:text-5xl text-balance">
-            KikPin – Pinterest Video, Image &amp; GIF Downloader
+            {seoPage?.h1 || 'KikPin – Pinterest Video, Image & GIF Downloader'}
           </h1>
           <p className="mt-3.5 max-w-2xl text-base leading-relaxed text-zinc-400">
-            Save public Pinterest videos, reels, images, GIFs, and carousels—including{' '}
-            <span className="font-mono text-sm text-zinc-200">pin.it</span> links—in the source quality Pinterest provides (HD, 2K, or 4K when available). No watermark or login credentials required.
+            {seoPage?.lead || (
+              <>
+                Save public Pinterest videos, reels, images, GIFs, and carousels—including{' '}
+                <span className="font-mono text-sm text-zinc-200">pin.it</span> links—in the source quality Pinterest provides (HD, 2K, or 4K when available). No watermark or login credentials required.
+              </>
+            )}
           </p>
 
           <div className="mt-7">
@@ -199,6 +214,27 @@ export default function App() {
           onRetry={() => runExtraction()}
           onReset={handleClear}
         />
+
+        {seoPage && (
+          <Suspense
+            fallback={
+              <section aria-label="Loading page content" className="mt-16 min-h-[360px] border-t border-white/10 pt-12">
+                <div className="h-7 w-64 animate-pulse rounded bg-white/8" />
+                <div className="mt-4 h-4 w-full max-w-2xl animate-pulse rounded bg-white/6" />
+                <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-3">
+                  {[0, 1, 2].map((item) => (
+                    <div key={item} className="h-40 animate-pulse rounded-2xl border border-white/10 bg-[#141418]" />
+                  ))}
+                </div>
+              </section>
+            }
+          >
+            {seoPage.pathname === '/pinterest-video-downloader' && <VideoSeoPage />}
+            {seoPage.pathname === '/pinterest-image-downloader' && <ImageSeoPage />}
+            {seoPage.pathname === '/pinterest-gif-downloader' && <GifSeoPage />}
+            {seoPage.pathname === '/how-to-download-pinterest-videos' && <DownloadGuideSeoPage />}
+          </Suspense>
+        )}
 
         <HowToSection />
         <SupportedFormatsSection />
