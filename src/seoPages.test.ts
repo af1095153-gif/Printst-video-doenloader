@@ -48,6 +48,14 @@ test('App uses lazy loading and a stable Suspense fallback for SEO routes', () =
   assert.match(app, /<Suspense/);
   assert.match(app, /Loading page content/);
   assert.match(app, /min-h-\[360px\]/);
+  for (const route of [
+    'VideoSeoPage',
+    'ImageSeoPage',
+    'GifSeoPage',
+    'DownloadGuideSeoPage',
+  ]) {
+    assert.match(app, new RegExp(route));
+  }
 });
 
 test('Vercel static assets have immutable caching without changing protected files or routes', () => {

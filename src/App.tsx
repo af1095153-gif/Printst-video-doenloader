@@ -18,7 +18,10 @@ import {
 } from './utils/pinterestClient';
 import { getSeoPage, updateDocumentMetadata } from './seoPages';
 
-const SeoLandingSection = lazy(() => import('./components/SeoLandingSection'));
+const VideoSeoPage = lazy(() => import('./components/seoPages/VideoSeoPage'));
+const ImageSeoPage = lazy(() => import('./components/seoPages/ImageSeoPage'));
+const GifSeoPage = lazy(() => import('./components/seoPages/GifSeoPage'));
+const DownloadGuideSeoPage = lazy(() => import('./components/seoPages/DownloadGuideSeoPage'));
 
 export default function App() {
   const seoPage = getSeoPage(window.location.pathname);
@@ -209,7 +212,10 @@ export default function App() {
               </section>
             }
           >
-            <SeoLandingSection page={seoPage} />
+            {seoPage.pathname === '/pinterest-video-downloader' && <VideoSeoPage />}
+            {seoPage.pathname === '/pinterest-image-downloader' && <ImageSeoPage />}
+            {seoPage.pathname === '/pinterest-gif-downloader' && <GifSeoPage />}
+            {seoPage.pathname === '/how-to-download-pinterest-videos' && <DownloadGuideSeoPage />}
           </Suspense>
         )}
 
