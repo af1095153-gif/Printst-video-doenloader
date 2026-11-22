@@ -1,4 +1,4 @@
-import type { FormEvent } from 'react';
+import { memo, type FormEvent } from 'react';
 import { ArrowRight, ClipboardPaste, Link2, Loader2, X } from 'lucide-react';
 import type { ExtractionStatus } from '../types/pinterest';
 
@@ -36,7 +36,7 @@ interface UrlExtractorBarProps {
   onClear: () => void;
 }
 
-export function UrlExtractorBar({
+export const UrlExtractorBar = memo(function UrlExtractorBar({
   urlInput,
   status,
   clipboardNotice,
@@ -143,4 +143,4 @@ export function UrlExtractorBar({
       </div>
     </div>
   );
-}
+});

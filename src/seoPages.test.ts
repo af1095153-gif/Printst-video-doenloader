@@ -41,3 +41,19 @@ test('public sitemap contains all four landing pages', () => {
     assert.ok(sitemap.includes(`https://kikpin.me${route}`));
   }
 });
+
+test('App uses lazy loading and a stable Suspense fallback for SEO routes', () => {
+  const app = readFileSync(new URL('./App.tsx', import.meta.url), 'utf8');
+  assert.match(app, /React\.lazy|lazy\s*\(/);
+  assert.match(app, /<Suspense/);
+  assert.match(app, /Loading page content/);
+  assert.match(app, /min-h-\[360px\]/);
+});
+
+test('Vercel static assets have immutable caching without changing protected files or routes', () => {
+  const vercel = readFileSync(new URL('../vercel.json', import.meta.url), 'utf8');
+  assert.match(vercel, /\/assets\/\(.*\)/);
+  assert.match(vercel, /max-age=31536000, immutable/);
+  assert.match(vercel, /robots\\.txt/);
+  assert.match(vercel, /sitemap\\.xml/);
+});

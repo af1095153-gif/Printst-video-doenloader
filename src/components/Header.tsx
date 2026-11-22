@@ -1,10 +1,11 @@
+import { memo } from 'react';
 import { ClipboardPaste } from 'lucide-react';
 
 interface HeaderProps {
   onPasteAction: () => void;
 }
 
-export function Header({ onPasteAction }: HeaderProps) {
+export const Header = memo(function Header({ onPasteAction }: HeaderProps) {
   return (
     <header className="sticky top-0 z-30 h-14 border-b border-white/10 bg-[#0B0B0E]/90 backdrop-blur-md">
       <div className="mx-auto flex h-full max-w-6xl items-center justify-between gap-8 px-4 sm:px-6">
@@ -67,4 +68,4 @@ export function Header({ onPasteAction }: HeaderProps) {
       </div>
     </header>
   );
-}
+});
