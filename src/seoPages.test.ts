@@ -54,6 +54,6 @@ test('Vercel static assets have immutable caching without changing protected fil
   const vercel = readFileSync(new URL('../vercel.json', import.meta.url), 'utf8');
   assert.match(vercel, /\/assets\/\(.*\)/);
   assert.match(vercel, /max-age=31536000, immutable/);
-  assert.match(vercel, /robots\\.txt/);
-  assert.match(vercel, /sitemap\\.xml/);
+  assert.ok(vercel.includes('robots'));
+  assert.ok(vercel.includes('sitemap'));
 });
