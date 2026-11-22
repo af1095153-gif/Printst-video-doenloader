@@ -1,0 +1,34 @@
+import type { SeoPage } from '../seoPages';
+
+interface SeoLandingSectionProps {
+  page: SeoPage;
+}
+
+export default function SeoLandingSection({ page }: SeoLandingSectionProps) {
+  return (
+    <section className="mt-16 border-t border-white/10 pt-12">
+      <h2 className="text-xl font-bold tracking-[-0.01em] text-white sm:text-2xl">
+        {page.sectionTitle}
+      </h2>
+      <p className="mt-2 max-w-2xl text-sm leading-relaxed text-zinc-400">
+        {page.sectionIntro}
+      </p>
+      <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-3">
+        {page.topics.map((topic) => (
+          <article key={topic.title} className="rounded-2xl border border-white/10 bg-[#141418] p-6">
+            <h3 className="text-base font-semibold text-white">{topic.title}</h3>
+            <p className="mt-2 text-sm leading-relaxed text-zinc-400">{topic.description}</p>
+          </article>
+        ))}
+      </div>
+      {page.pathname === '/how-to-download-pinterest-videos' && (
+        <div className="mt-8 rounded-2xl border border-white/10 bg-[#141418] p-6">
+          <h3 className="text-base font-semibold text-white">Troubleshooting pin.it links and private Pins</h3>
+          <p className="mt-2 text-sm leading-relaxed text-zinc-400">
+            If a pin.it link does not open, copy it again from the Pinterest share menu or paste the full destination URL. KikPin cannot save private Pins, deleted Pins, or content whose owner has restricted access. Only public Pins and content you own or are permitted to use can be downloaded.
+          </p>
+        </div>
+      )}
+    </section>
+  );
+}

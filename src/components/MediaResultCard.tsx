@@ -185,6 +185,8 @@ export function MediaResultCard({
                 controls
                 playsInline
                 preload="metadata"
+                width="640"
+                height="800"
                 className="max-h-[520px] w-full bg-black object-contain"
               />
             ) : !imageLoadFailed ? (
@@ -192,6 +194,10 @@ export function MediaResultCard({
                 key={activeMediaUrl}
                 src={activeMediaUrl}
                 alt={result.title}
+                width="736"
+                height="736"
+                loading="lazy"
+                decoding="async"
                 referrerPolicy="no-referrer"
                 onError={() => setImageLoadFailed(true)}
                 className="max-h-[520px] w-full object-contain bg-[#08080A]"

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { Header } from './components/Header';
 import { UrlExtractorBar } from './components/UrlExtractorBar';
 import { MediaResultCard } from './components/MediaResultCard';
@@ -17,6 +17,8 @@ import {
   validatePinUrlInput,
 } from './utils/pinterestClient';
 import { getSeoPage, updateDocumentMetadata } from './seoPages';
+
+const SeoLandingSection = lazy(() => import('./components/SeoLandingSection'));
 
 export default function App() {
   const seoPage = getSeoPage(window.location.pathname);
@@ -37,7 +39,7 @@ export default function App() {
     if (seoPage) updateDocumentMetadata(seoPage);
   }, [seoPage?.pathname]);
 
-  const runExtraction = async (urlOverride?: string) => {
+  const runExtraction = useCallback(async (urlOverride?: string) => {
     const rawTarget = typeof urlOverride === 'string' ? urlOverride : urlInput;
     if (typeof urlOverride === 'string') {
       setUrlInput(urlOverride);
@@ -88,9 +90,9 @@ export default function App() {
       setResult(null);
       setErrorMessage('Network error while contacting the extractor. Please try again.');
     }
-  };
+  }, [urlInput]);
 
-  const handlePasteFromClipboard = async () => {
+  const handlePasteFromClipboard = useCallback(async () => {
     setClipboardNotice(null);
     const inputEl = document.getElementById('pin-url-input') as HTMLInputElement | null;
 
@@ -121,29 +123,29 @@ export default function App() {
       setClipboardNotice('Browser blocked clipboard read. Click inside the box and press Ctrl+V or Cmd+V.');
       inputEl?.focus();
     }
-  };
+  }, [runExtraction]);
 
-  const handleClear = () => {
+  const handleClear = useCallback(() => {
     activeRequestIdRef.current += 1;
     setUrlInput('');
     setClipboardNotice(null);
     setStatus('idle');
     setResult(null);
     setErrorMessage(null);
-  };
+  }, []);
 
-  const handleSelectHistoryItem = (item: HistoryItem) => {
+  const handleSelectHistoryItem = useCallback((item: HistoryItem) => {
     setUrlInput(item.sourceUrl);
     setResult(item);
     setErrorMessage(null);
     setStatus('success');
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  }, []);
 
-  const handleClearHistory = () => {
+  const handleClearHistory = useCallback(() => {
     clearStoredHistory();
     setHistory([]);
-  };
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#0B0B0E] text-[#F4F4F6]">
@@ -194,30 +196,21 @@ export default function App() {
         />
 
         {seoPage && (
-          <section className="mt-16 border-t border-white/10 pt-12">
-            <h2 className="text-xl font-bold tracking-[-0.01em] text-white sm:text-2xl">
-              {seoPage.sectionTitle}
-            </h2>
-            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-zinc-400">
-              {seoPage.sectionIntro}
-            </p>
-            <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-3">
-              {seoPage.topics.map((topic) => (
-                <article key={topic.title} className="rounded-2xl border border-white/10 bg-[#141418] p-6">
-                  <h3 className="text-base font-semibold text-white">{topic.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-zinc-400">{topic.description}</p>
-                </article>
-              ))}
-            </div>
-            {seoPage.pathname === '/how-to-download-pinterest-videos' && (
-              <div className="mt-8 rounded-2xl border border-white/10 bg-[#141418] p-6">
-                <h3 className="text-base font-semibold text-white">Troubleshooting pin.it links and private Pins</h3>
-                <p className="mt-2 text-sm leading-relaxed text-zinc-400">
-                  If a pin.it link does not open, copy it again from the Pinterest share menu or paste the full destination URL. KikPin cannot save private Pins, deleted Pins, or content whose owner has restricted access. Only public Pins and content you own or are permitted to use can be downloaded.
-                </p>
-              </div>
-            )}
-          </section>
+          <Suspense
+            fallback={
+              <section aria-label="Loading page content" className="mt-16 min-h-[360px] border-t border-white/10 pt-12">
+                <div className="h-7 w-64 animate-pulse rounded bg-white/8" />
+                <div className="mt-4 h-4 w-full max-w-2xl animate-pulse rounded bg-white/6" />
+                <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-3">
+                  {[0, 1, 2].map((item) => (
+                    <div key={item} className="h-40 animate-pulse rounded-2xl border border-white/10 bg-[#141418]" />
+                  ))}
+                </div>
+              </section>
+            }
+          >
+            <SeoLandingSection page={seoPage} />
+          </Suspense>
         )}
 
         <HowToSection />
