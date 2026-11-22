@@ -10,7 +10,7 @@ export function Header({ onPasteAction }: HeaderProps) {
       <div className="mx-auto flex h-full max-w-6xl items-center justify-between gap-8 px-4 sm:px-6">
         {/* Zone 1: Single-line Brand Wordmark */}
         <a
-          href="#downloader"
+          href="/"
           className="flex shrink-0 items-center gap-2.5 text-lg font-bold tracking-tight text-white whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E60023] rounded-md"
         >
           <span
@@ -28,28 +28,28 @@ export function Header({ onPasteAction }: HeaderProps) {
           className="hidden md:flex items-center gap-7 text-sm font-medium text-zinc-400"
         >
           <a
-            href="#downloader"
+            href="/pinterest-video-downloader"
             className="whitespace-nowrap shrink-0 transition-colors hover:text-white hover:underline underline-offset-4"
           >
-            Downloader
+            Video
           </a>
           <a
-            href="#formats"
+            href="/pinterest-image-downloader"
             className="whitespace-nowrap shrink-0 transition-colors hover:text-white hover:underline underline-offset-4"
           >
-            Formats
+            Images
           </a>
           <a
-            href="#recent"
+            href="/pinterest-gif-downloader"
             className="whitespace-nowrap shrink-0 transition-colors hover:text-white hover:underline underline-offset-4"
           >
-            Recent
+            GIF
           </a>
           <a
-            href="#faq"
+            href="/how-to-download-pinterest-videos"
             className="whitespace-nowrap shrink-0 transition-colors hover:text-white hover:underline underline-offset-4"
           >
-            FAQ
+            Guide
           </a>
         </nav>
 
