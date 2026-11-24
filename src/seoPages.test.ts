@@ -3,95 +3,145 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { getSeoPage, seoPages } from './seoPages';
 
-const routes = [
-  '/pinterest-video-downloader',
-  '/pinterest-image-downloader',
-  '/pinterest-gif-downloader',
-  '/how-to-download-pinterest-videos',
+const expectedPages = [
+  {
+    route: '/pinterest-video-downloader',
+    title: 'Pinterest Video Downloader — Download 1080p HD MP4 (No Watermark) | KikPin',
+    description:
+      'Download public Pinterest videos in 1080p HD MP4 free with KikPin. Works with pin.it short links on Android, iPhone, Windows, and Mac—no app or watermark.',
+    h1: 'Pinterest Video Downloader (1080p HD)',
+  },
+  {
+    route: '/pinterest-image-downloader',
+    title: 'Pinterest Image Downloader — Save Full-Resolution HD Photos | KikPin',
+    description:
+      'Download original full-resolution Pinterest images and carousels in JPG/PNG without compression or login using KikPin.me.',
+    h1: 'Pinterest Image Downloader',
+  },
+  {
+    route: '/pinterest-gif-downloader',
+    title: 'Pinterest GIF Downloader — Save Animated Pinterest GIFs Free | KikPin',
+    description:
+      'Save animated GIFs from Pinterest in original quality with KikPin. Free, fast, watermark-free, and works in any browser.',
+    h1: 'Pinterest GIF Downloader',
+  },
+  {
+    route: '/idea-pin-downloader',
+    title: 'Pinterest Idea Pin Downloader — Save Idea Pins & Reels With Audio | KikPin',
+    description:
+      'Download Pinterest Idea Pins and Reels in HD with original audio intact. Free, no watermark, and no login required on KikPin.me.',
+    h1: 'Pinterest Idea Pin Downloader (With Audio)',
+  },
 ];
 
-test('all four SEO routes have unique, route-specific metadata', () => {
-  assert.deepEqual(Object.keys(seoPages), routes);
+const requiredSitemap = [
+  ['https://kikpin.me', '1.0'],
+  ['https://kikpin.me/pinterest-video-downloader', '0.9'],
+  ['https://kikpin.me/pinterest-image-downloader', '0.8'],
+  ['https://kikpin.me/pinterest-gif-downloader', '0.8'],
+  ['https://kikpin.me/idea-pin-downloader', '0.8'],
+  ['https://kikpin.me/extension', '0.8'],
+] as const;
 
-  const titles = new Set<string>();
-  for (const route of routes) {
-    const page = getSeoPage(route);
+test('all media SEO pages expose the requested metadata and three FAQs/steps', () => {
+  for (const expected of expectedPages) {
+    const page = getSeoPage(expected.route);
     assert.ok(page);
-    assert.equal(page.pathname, route);
-    assert.notEqual(page.title, '');
-    assert.notEqual(page.description, '');
-    assert.notEqual(page.h1, '');
-    titles.add(page.title);
+    assert.equal(page.title, expected.title);
+    assert.equal(page.description, expected.description);
+    assert.equal(page.h1, expected.h1);
+    assert.equal(page.steps.length, 3);
+    assert.equal(page.faqs.length, 3);
   }
-  assert.equal(titles.size, 4);
+
+  const guide = getSeoPage('/how-to-download-pinterest-videos');
+  assert.ok(guide);
+  assert.match(guide.lead, /iPhone \(iOS\)/);
+  assert.match(guide.lead, /Android/);
+  assert.match(guide.lead, /PC\/Desktop/);
 });
 
-test('the download guide includes all required platforms and troubleshooting topics', () => {
-  const page = getSeoPage('/how-to-download-pinterest-videos');
-  assert.ok(page);
-  assert.match(page.lead, /iPhone \(iOS\)/);
-  assert.match(page.lead, /Android/);
-  assert.match(page.lead, /PC\/Desktop/);
-  assert.match(page.topics.map((topic) => `${topic.title} ${topic.description}`).join(' '), /pin\.it/i);
-});
+test('Next route metadata includes exact titles, descriptions, and canonical URLs', () => {
+  const routeFiles = [
+    ...expectedPages.map(({ route }) => `../app${route}/page.tsx`),
+    '../app/extension/page.tsx',
+  ];
+  const extensionMetadata = {
+    title: 'KikPin Browser Extension — 1-Click Pinterest Video Downloader | KikPin',
+    description:
+      'Install the free, privacy-first KikPin Manifest V3 browser extension for Microsoft Edge and Firefox to download Pinterest videos in 1 click.',
+  };
 
-test('public sitemap contains all four landing pages', () => {
-  const sitemap = readFileSync(new URL('../public/sitemap.xml', import.meta.url), 'utf8');
-  for (const route of routes) {
-    assert.ok(sitemap.includes(`https://kikpin.me${route}`));
+  for (const routeFile of routeFiles) {
+    const source = readFileSync(new URL(routeFile, import.meta.url), 'utf8');
+    assert.match(source, /export const metadata/);
+    assert.match(source, /alternates:\s*\{\s*canonical:/);
+  }
+  const extension = readFileSync(new URL('../app/extension/page.tsx', import.meta.url), 'utf8');
+  assert.ok(extension.includes(extensionMetadata.title));
+  assert.ok(extension.includes(extensionMetadata.description));
+
+  for (const expected of expectedPages) {
+    const source = readFileSync(new URL(`../app${expected.route}/page.tsx`, import.meta.url), 'utf8');
+    assert.ok(source.includes(expected.title));
+    assert.ok(source.includes(expected.description));
+    assert.ok(source.includes(`https://kikpin.me${expected.route}`));
   }
 });
 
-test('App uses lazy loading and a stable Suspense fallback for SEO routes', () => {
+test('Next sitemap lists the six requested URLs with their priorities', () => {
+  const sitemap = readFileSync(new URL('../app/sitemap.ts', import.meta.url), 'utf8');
+  for (const [url, priority] of requiredSitemap) {
+    const entry = sitemap.split('\n').find((line) => line.includes(`url: '${url}'`));
+    assert.ok(entry);
+    assert.ok(entry.includes(`priority: ${priority}`));
+  }
+});
+
+test('all four media routes reuse the downloader and SEO tool links', () => {
   const app = readFileSync(new URL('./App.tsx', import.meta.url), 'utf8');
-  assert.match(app, /React\.lazy|lazy\s*\(/);
-  assert.match(app, /<Suspense/);
-  assert.match(app, /Loading page content/);
-  assert.match(app, /min-h-\[360px\]/);
-  for (const route of [
-    'VideoSeoPage',
-    'ImageSeoPage',
-    'GifSeoPage',
-    'DownloadGuideSeoPage',
+  const links = readFileSync(new URL('./components/ToolLinks.tsx', import.meta.url), 'utf8');
+  assert.match(app, /UrlExtractorBar/);
+  assert.match(app, /MediaResultCard/);
+  assert.match(app, /SeoLandingSection page=\{seoPage\}/);
+  for (const label of [
+    'Pinterest Video Downloader',
+    'Pinterest Image Downloader',
+    'Pinterest GIF Downloader',
+    'Idea Pin Downloader',
+    'Browser Extension',
   ]) {
-    assert.match(app, new RegExp(route));
+    assert.ok(links.includes(label));
   }
 });
 
-test('Vercel static assets have immutable caching without changing protected files or routes', () => {
-  const vercel = readFileSync(new URL('../vercel.json', import.meta.url), 'utf8');
-  assert.match(vercel, /\/assets\/\(.*\)/);
-  assert.match(vercel, /max-age=31536000, immutable/);
-  assert.ok(vercel.includes('robots'));
-  assert.ok(vercel.includes('sitemap'));
+test('extension page highlights the Edge install and the verified privacy model', () => {
+  const extensionSection = readFileSync(new URL('./components/BrowserExtensionSection.tsx', import.meta.url), 'utf8');
+  const app = readFileSync(new URL('./App.tsx', import.meta.url), 'utf8');
+  const manifest = readFileSync(new URL('../browser-extension/manifest.json', import.meta.url), 'utf8');
+  assert.match(extensionSection, /Add to Microsoft Edge/);
+  assert.match(extensionSection, /target="_blank"/);
+  assert.match(extensionSection, /rel="noopener noreferrer"/);
+  assert.match(app, /Manifest V3/);
+  assert.match(app, /activeTab only/);
+  assert.match(app, /Zero remote code/);
+  assert.match(app, /Zero background data collection/);
+  assert.match(app, /only the selected Pin URL is passed to KikPin/);
+  assert.match(manifest, /"permissions":\s*\["activeTab"\]/);
 });
 
-test('llms.txt starts with KikPin and links to all five main pages', () => {
+test('llms.txt links to the homepage, all five tools, and the preserved guide', () => {
   const llms = readFileSync(new URL('../public/llms.txt', import.meta.url), 'utf8');
   assert.match(llms, /^# KikPin/m);
-  for (const url of [
-    'https://kikpin.me/',
-    'https://kikpin.me/pinterest-video-downloader',
-    'https://kikpin.me/pinterest-image-downloader',
-    'https://kikpin.me/pinterest-gif-downloader',
-    'https://kikpin.me/how-to-download-pinterest-videos',
-  ]) {
-    assert.ok(llms.includes(url));
-  }
+  for (const [url] of requiredSitemap) assert.ok(llms.includes(url));
+  assert.ok(llms.includes('https://kikpin.me/how-to-download-pinterest-videos'));
 });
 
-test('Google Fonts load asynchronously with swap and are limited to used weights', () => {
-  const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
-  assert.match(html, /rel="preload"/);
-  assert.match(html, /as="style"/);
-  assert.match(html, /onload=/);
-  assert.match(html, /<noscript>/);
-  assert.match(html, /&amp;display=swap/);
-  assert.doesNotMatch(html, /400\.\.700|wght@500;600;700;800/);
-});
-
-test('Vercel SPA rewrite does not capture static file extensions', () => {
-  const vercel = readFileSync(new URL('../vercel.json', import.meta.url), 'utf8');
-  assert.match(vercel, /\\\.\[\^\/\]\+\$/);
-  assert.doesNotMatch(vercel, /robots\\\.txt\|sitemap\\\.xml/);
+test('Next layout preserves the KikPin typography and theme metadata', () => {
+  const layout = readFileSync(new URL('../app/layout.tsx', import.meta.url), 'utf8');
+  assert.match(layout, /fonts\.googleapis\.com/);
+  assert.match(layout, /DM\+Sans/);
+  assert.match(layout, /Plus\+Jakarta\+Sans/);
+  assert.match(layout, /themeColor:\s*'#0B0B0E'/);
+  assert.match(layout, /metadataBase:\s*new URL\('https:\/\/kikpin\.me'\)/);
 });

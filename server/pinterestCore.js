@@ -1164,17 +1164,14 @@ export async function extractPinMedia(pinUrl) {
 }
 
 /**
- * Securely proxies and streams media from *.pinimg.com with download headers.
+ * Fetches media from the allow-listed Pinterest CDN and returns a download response.
  */
-export async function streamPinMedia(mediaUrl, filename, res) {
+export async function createPinMediaResponse(mediaUrl, filename) {
   if (!isAllowedPinimgUrl(mediaUrl)) {
-    const message = 'Blocked: Only *.pinimg.com media URLs can be proxied.';
-    if (typeof res.status === 'function') {
-      return res.status(403).json({ error: message });
-    }
-    res.statusCode = 403;
-    res.setHeader('Content-Type', 'application/json');
-    return res.end(JSON.stringify({ error: message }));
+    return Response.json(
+      { error: 'Blocked: Only *.pinimg.com media URLs can be proxied.' },
+      { status: 403 },
+    );
   }
 
   let upstream;
@@ -1188,23 +1185,17 @@ export async function streamPinMedia(mediaUrl, filename, res) {
       signal: AbortSignal.timeout(30000),
     });
   } catch (err) {
-    const message = `Failed to download upstream media: ${err?.message || 'Network error'}`;
-    if (typeof res.status === 'function') {
-      return res.status(502).json({ error: message });
-    }
-    res.statusCode = 502;
-    res.setHeader('Content-Type', 'application/json');
-    return res.end(JSON.stringify({ error: message }));
+    return Response.json(
+      { error: `Failed to download upstream media: ${err?.message || 'Network error'}` },
+      { status: 502 },
+    );
   }
 
   if (!upstream.ok) {
-    const message = `Upstream media server responded with HTTP ${upstream.status}.`;
-    if (typeof res.status === 'function') {
-      return res.status(502).json({ error: message });
-    }
-    res.statusCode = 502;
-    res.setHeader('Content-Type', 'application/json');
-    return res.end(JSON.stringify({ error: message }));
+    return Response.json(
+      { error: `Upstream media server responded with HTTP ${upstream.status}.` },
+      { status: 502 },
+    );
   }
 
   const lowerUrl = mediaUrl.toLowerCase().split('?')[0];
@@ -1219,24 +1210,39 @@ export async function streamPinMedia(mediaUrl, filename, res) {
     /[^a-zA-Z0-9._-]/g,
     '_',
   );
-
-  res.setHeader('Content-Disposition', `attachment; filename="${safeFilename}"`);
-  res.setHeader('Content-Type', contentType);
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Cache-Control', 'public, max-age=3600');
-
+  const headers = new Headers({
+    'Content-Disposition': `attachment; filename="${safeFilename}"`,
+    'Content-Type': contentType,
+    'Access-Control-Allow-Origin': '*',
+    'Cache-Control': 'public, max-age=3600',
+  });
   const contentLength = upstream.headers.get('content-length');
-  if (contentLength) {
-    res.setHeader('Content-Length', contentLength);
+  if (contentLength) headers.set('Content-Length', contentLength);
+
+  return new Response(upstream.body || Buffer.from(await upstream.arrayBuffer()), { headers });
+}
+
+/**
+ * Securely proxies and streams media from *.pinimg.com with download headers.
+ */
+export async function streamPinMedia(mediaUrl, filename, res) {
+  const response = await createPinMediaResponse(mediaUrl, filename);
+  response.headers.forEach((value, key) => res.setHeader(key, value));
+  res.statusCode = response.status;
+
+  if (!response.ok) {
+    const payload = await response.json();
+    if (typeof res.status === 'function') {
+      return res.status(response.status).json(payload);
+    }
+    return res.end(JSON.stringify(payload));
   }
 
-  if (upstream.body) {
-    const nodeStream = Readable.fromWeb(upstream.body);
+  if (response.body) {
+    const nodeStream = Readable.fromWeb(response.body);
     return new Promise((resolve, reject) => {
       nodeStream.on('error', (err) => {
-        if (!res.headersSent) {
-          res.statusCode = 502;
-        }
+        if (!res.headersSent) res.statusCode = 502;
         res.end();
         reject(err);
       });
@@ -1245,6 +1251,5 @@ export async function streamPinMedia(mediaUrl, filename, res) {
     });
   }
 
-  const buffer = Buffer.from(await upstream.arrayBuffer());
-  res.end(buffer);
+  res.end(Buffer.from(await response.arrayBuffer()));
 }
