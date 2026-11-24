@@ -1,6 +1,7 @@
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { Star } from 'lucide-react';
 import { Header } from './components/Header';
+import { BrowserExtensionSection } from './components/BrowserExtensionSection';
 import { UrlExtractorBar } from './components/UrlExtractorBar';
 import { MediaResultCard } from './components/MediaResultCard';
 import {
@@ -227,6 +228,8 @@ export default function App() {
           onReset={handleClear}
         />
 
+        {!seoPage && <BrowserExtensionSection />}
+
         <LatestUpdatesSection />
         <DeviceGuidesSection />
 
@@ -266,6 +269,12 @@ export default function App() {
       <footer className="border-t border-white/10 py-6">
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 text-xs text-zinc-500 sm:flex-row sm:items-center sm:justify-between sm:px-6">
           <p>KikPin — Free Pinterest video, image, and GIF downloader.</p>
+          <a
+            href="/#browser-extension"
+            className="w-fit text-zinc-400 transition-colors hover:text-white hover:underline underline-offset-4"
+          >
+            Browser Extension
+          </a>
           <p>KikPin is independent and not affiliated with Pinterest. Download only content you own or have permission to save.</p>
         </div>
       </footer>

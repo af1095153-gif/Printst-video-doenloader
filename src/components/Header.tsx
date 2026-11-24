@@ -52,6 +52,12 @@ export const Header = memo(function Header({ onPasteAction }: HeaderProps) {
           >
             Guide
           </a>
+          <a
+            href="/#browser-extension"
+            className="whitespace-nowrap shrink-0 transition-colors hover:text-white hover:underline underline-offset-4"
+          >
+            Browser Extension
+          </a>
         </nav>
 
         {/* Zone 3: Single Primary Action */}
