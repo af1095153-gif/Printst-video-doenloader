@@ -36,6 +36,7 @@ export default function App() {
   const [history, setHistory] = useState<HistoryItem[]>([]);
 
   const activeRequestIdRef = useRef(0);
+  const queryUrlHandledRef = useRef(false);
 
   useEffect(() => {
     setHistory(loadHistory());
@@ -97,6 +98,15 @@ export default function App() {
       setErrorMessage('Network error while contacting the extractor. Please try again.');
     }
   }, [urlInput]);
+
+  useEffect(() => {
+    if (queryUrlHandledRef.current || window.location.pathname !== '/') return;
+    queryUrlHandledRef.current = true;
+
+    const queryUrl = new URLSearchParams(window.location.search).get('url');
+    const initialUrl = queryUrl?.trim();
+    if (initialUrl) void runExtraction(initialUrl);
+  }, [runExtraction]);
 
   const handlePasteFromClipboard = useCallback(async () => {
     setClipboardNotice(null);
