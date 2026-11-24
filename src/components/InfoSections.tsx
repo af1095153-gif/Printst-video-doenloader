@@ -1,4 +1,5 @@
-import { Film, Image as ImageIcon, Layers, RotateCcw, Trash2 } from 'lucide-react';
+import { useState, type KeyboardEvent } from 'react';
+import { ChevronDown, Film, Image as ImageIcon, Layers, RotateCcw, Trash2 } from 'lucide-react';
 import type { HistoryItem } from '../types/pinterest';
 import { formatShortHost } from '../utils/pinterestClient';
 
@@ -15,6 +16,121 @@ export function HowToSection() {
           <h3 className="text-base font-semibold text-white">Desktop browser</h3>
           <p className="mt-2 text-sm leading-relaxed text-zinc-400">Copy the pin URL from your browser, paste it into KikPin, select Download, and save the file to your Downloads folder.</p>
         </article>
+      </div>
+    </section>
+  );
+}
+
+export function LatestUpdatesSection() {
+  const updates = [
+    { date: 'Nov 2026', dateTime: '2026-11', text: 'Added full 1080p HD & Idea Pin audio extraction.' },
+    { date: 'Oct 2026', dateTime: '2026-10', text: 'Improved pin.it short-link speed and mobile Safari support.' },
+    { date: 'Sep 2026', dateTime: '2026-09', text: 'Zero-watermark GIF & high-res cover image downloads live.' },
+  ];
+
+  return (
+    <section aria-labelledby="latest-updates-heading" className="mt-10 rounded-2xl border border-white/10 bg-[#141418] p-5 sm:p-6">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div className="max-w-xs">
+          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#FF3B53]">What&apos;s new</p>
+          <h2 id="latest-updates-heading" className="mt-1 text-lg font-bold text-white">Latest Updates</h2>
+        </div>
+        <ul className="grid flex-1 gap-3 text-sm text-zinc-300">
+          {updates.map((update) => (
+            <li key={update.date} className="flex items-start gap-2.5 text-sm sm:gap-3">
+              <span aria-hidden="true" className="mt-1.5 size-1.5 shrink-0 rounded-full bg-[#FF3B53]" />
+              <time dateTime={update.dateTime} className="shrink-0 font-medium text-zinc-100">{update.date}</time>
+              <span className="leading-relaxed text-zinc-400">{update.text}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+export function DeviceGuidesSection() {
+  const deviceGuides = [
+    {
+      id: 'android',
+      label: 'Android',
+      steps: [
+        'Copy the pin link in the Pinterest app.',
+        'Open Chrome and go to kikpin.me.',
+        'Paste the link, tap Extract Media, then save the file to your Gallery.',
+      ],
+    },
+    {
+      id: 'iphone',
+      label: 'iPhone (iOS)',
+      steps: [
+        'Copy the pin link in Pinterest.',
+        'Open Safari and go to kikpin.me.',
+        'Paste the link and tap Extract Media. In Files, tap Share and choose Save Video or Save Image to add it to Photos.',
+      ],
+    },
+    {
+      id: 'desktop',
+      label: 'PC / Mac',
+      steps: [
+        'Copy the Pin URL from your browser.',
+        'Paste the link into kikpin.me.',
+        'Choose Download HD MP4, or right-click the download link to save it.',
+      ],
+    },
+  ];
+  const [activeId, setActiveId] = useState(deviceGuides[0].id);
+  const activeGuide = deviceGuides.find((guide) => guide.id === activeId) ?? deviceGuides[0];
+
+  const handleTabKeyDown = (event: KeyboardEvent<HTMLButtonElement>, currentIndex: number) => {
+    let nextIndex = currentIndex;
+    if (event.key === 'ArrowRight') nextIndex = (currentIndex + 1) % deviceGuides.length;
+    else if (event.key === 'ArrowLeft') nextIndex = (currentIndex - 1 + deviceGuides.length) % deviceGuides.length;
+    else if (event.key === 'Home') nextIndex = 0;
+    else if (event.key === 'End') nextIndex = deviceGuides.length - 1;
+    else return;
+
+    event.preventDefault();
+    const nextGuide = deviceGuides[nextIndex];
+    setActiveId(nextGuide.id);
+    document.getElementById(`device-tab-${nextGuide.id}`)?.focus();
+  };
+
+  return (
+    <section aria-labelledby="device-guides-heading" className="mt-12 border-t border-white/10 pt-10">
+      <div className="max-w-2xl">
+        <h2 id="device-guides-heading" className="text-xl font-bold tracking-[-0.01em] text-white sm:text-2xl">Device-specific download guides</h2>
+        <p className="mt-2 text-sm leading-relaxed text-zinc-400">Follow the steps for your device to save public Pinterest media with KikPin.</p>
+      </div>
+      <div className="mt-5 overflow-hidden rounded-2xl border border-white/10 bg-[#141418]">
+        <div role="tablist" aria-label="Choose your device" className="flex flex-wrap gap-2 border-b border-white/10 p-3 sm:gap-3 sm:p-4">
+          {deviceGuides.map((guide, index) => (
+            <button
+              key={guide.id}
+              id={`device-tab-${guide.id}`}
+              type="button"
+              role="tab"
+              aria-selected={activeId === guide.id}
+              aria-controls="device-guide-panel"
+              tabIndex={activeId === guide.id ? 0 : -1}
+              onClick={() => setActiveId(guide.id)}
+              onKeyDown={(event) => handleTabKeyDown(event, index)}
+              className={`min-h-10 rounded-lg px-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B53] sm:px-4 ${activeId === guide.id ? 'bg-[#242429] text-white' : 'text-zinc-400 hover:bg-white/[0.04] hover:text-zinc-200'}`}
+            >
+              {guide.label}
+            </button>
+          ))}
+        </div>
+        <div id="device-guide-panel" role="tabpanel" aria-labelledby={`device-tab-${activeGuide.id}`} tabIndex={0} className="p-5 outline-none sm:p-6">
+          <ol className="grid gap-4 sm:grid-cols-3">
+            {activeGuide.steps.map((step, index) => (
+              <li key={step} className="flex items-start gap-3 text-sm leading-relaxed text-zinc-300">
+                <span aria-hidden="true" className="flex size-7 shrink-0 items-center justify-center rounded-full border border-white/10 bg-[#1C1C22] text-xs font-semibold text-[#FF3B53]">{index + 1}</span>
+                <span>{step}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
       </div>
     </section>
   );
@@ -148,19 +264,39 @@ export function RecentHistorySection({
 export function FaqSection() {
   const faqs = [
     {
-      q: 'How do I download videos, images, and GIFs from Pinterest?',
-      a: 'Copy the link to a public pin, paste it into KikPin, and choose the available download. On mobile, tap ••• in Pinterest and select Copy Link; on desktop, copy the pin URL from your browser.',
+      q: 'How do I download Pinterest videos without a watermark?',
+      a: 'Copy the link to a public Pinterest video, paste it into KikPin, and select Extract Media. KikPin downloads the available source file without adding a watermark; Pinterest source quality can vary by pin.',
+    },
+    {
+      q: 'Can I save Pinterest Idea Pins with audio?',
+      a: 'Yes, when Pinterest provides an audio-enabled video source for that public Idea Pin. Paste its link into KikPin and choose the available video download.',
+    },
+    {
+      q: 'Does KikPin work on iPhone (iOS) without installing an app?',
+      a: 'Yes. Open kikpin.me in Safari, paste a public Pinterest link, and download directly in your browser. No KikPin app installation is needed.',
+    },
+    {
+      q: 'Why do some Pinterest GIFs download as MP4?',
+      a: 'Pinterest may store animated GIF-style pins as video files. KikPin downloads the format provided by the source, so an animated pin can arrive as MP4 while keeping its motion.',
+    },
+    {
+      q: 'Is KikPin free and safe to use?',
+      a: 'KikPin is free to use and does not require a login. Use it only with public Pinterest links, and download content you own or have permission to save.',
+    },
+    {
+      q: 'Where are downloaded Pinterest videos saved on my phone?',
+      a: 'On Android, check Downloads or your browser’s download list. On iPhone, open Files > Downloads; use Share and Save Video to move a video to Photos.',
+    },
+    {
+      q: 'How do I download Pinterest videos, images, and GIFs?',
+      a: 'Copy a public pin link, paste it into KikPin, and select the available media download. Use Copy Link in the Pinterest app or copy the pin URL in a desktop browser.',
     },
     {
       q: 'Do I need a Pinterest account or login?',
       a: 'No. You do not need a KikPin account or Pinterest login to download public pins.',
     },
     {
-      q: 'Where are downloaded files saved?',
-      a: 'Files go to your device’s default Downloads folder, unless your browser asks you to choose a different location.',
-    },
-    {
-      q: 'Can private or deleted pins be downloaded?',
+      q: 'Can private or deleted Pinterest pins be downloaded?',
       a: 'No. Private, deleted, or otherwise unavailable pins cannot be accessed by KikPin.',
     },
     {
@@ -174,14 +310,17 @@ export function FaqSection() {
       <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
         Frequently Asked Questions
       </h2>
-      <dl className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-3">
+      <div className="mt-6 grid gap-3">
         {faqs.map((faq) => (
-          <div key={faq.q} className="rounded-2xl border border-white/10 bg-[#141418] p-6">
-            <dt className="text-sm font-semibold text-white">{faq.q}</dt>
-            <dd className="mt-2 text-sm leading-relaxed text-zinc-400">{faq.a}</dd>
-          </div>
+          <details key={faq.q} className="group rounded-xl border border-white/10 bg-[#141418] transition-colors open:border-white/20">
+            <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-left text-sm font-semibold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#FF3B53] [&::-webkit-details-marker]:hidden">
+              {faq.q}
+              <ChevronDown aria-hidden="true" className="size-4 shrink-0 text-zinc-400 transition-transform group-open:rotate-180" />
+            </summary>
+            <p className="px-5 pb-5 text-sm leading-relaxed text-zinc-400">{faq.a}</p>
+          </details>
         ))}
-      </dl>
+      </div>
     </section>
   );
 }

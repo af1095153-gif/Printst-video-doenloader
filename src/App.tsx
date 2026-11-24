@@ -4,8 +4,10 @@ import { Header } from './components/Header';
 import { UrlExtractorBar } from './components/UrlExtractorBar';
 import { MediaResultCard } from './components/MediaResultCard';
 import {
+  DeviceGuidesSection,
   FaqSection,
   HowToSection,
+  LatestUpdatesSection,
   RecentHistorySection,
   SupportedFormatsSection,
 } from './components/InfoSections';
@@ -214,6 +216,9 @@ export default function App() {
           onRetry={() => runExtraction()}
           onReset={handleClear}
         />
+
+        <LatestUpdatesSection />
+        <DeviceGuidesSection />
 
         {seoPage && (
           <Suspense
