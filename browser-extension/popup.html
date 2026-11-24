@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>KikPin</title>
+    <link rel="stylesheet" href="popup.css" />
+    <script src="popup.js" defer></script>
+  </head>
+  <body>
+    <main class="popup-shell">
+      <header class="header">
+        <img class="brand-icon" src="icon.png" alt="" width="36" height="36" />
+        <div>
+          <h1>KikPin</h1>
+          <p>Quick Pinterest downloads</p>
+        </div>
+      </header>
+
+      <div class="status" id="tab-status" role="status" aria-live="polite">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span id="status-text">Checking current tab…</span>
+      </div>
+
+      <button class="primary-button" id="primary-button" type="button" disabled>
+        Open KikPin.me
+      </button>
+
+      <div class="divider" aria-hidden="true"><span>or paste a link</span></div>
+
+      <form id="manual-form" novalidate>
+        <label for="manual-url">Pinterest or pin.it URL</label>
+        <div class="input-row">
+          <input
+            id="manual-url"
+            name="url"
+            type="url"
+            inputmode="url"
+            autocomplete="url"
+            placeholder="https://pin.it/..."
+            aria-describedby="form-feedback"
+          />
+          <button class="submit-button" type="submit" aria-label="Open pasted Pinterest link">
+            Go
+          </button>
+        </div>
+        <p class="feedback" id="form-feedback" role="status" aria-live="polite">
+          Opens KikPin in a new tab.
+        </p>
+      </form>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "KikPin - Pinterest Video Downloader",
+  "version": "1.0.0",
+  "description": "One-click HD Pinterest video, Idea Pin, GIF, and image downloader via KikPin.me.",
+  "permissions": ["activeTab"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "128": "icon.png"
+    }
+  },
+  "icons": {
+    "128": "icon.png"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "extension@kikpin.me",
+      "strict_min_version": "109.0"
+    }
+  }
+}
