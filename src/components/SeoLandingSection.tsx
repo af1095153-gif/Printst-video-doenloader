@@ -21,6 +21,38 @@ export default function SeoLandingSection({ page }: SeoLandingSectionProps) {
           </article>
         ))}
       </div>
+
+      <section aria-labelledby="download-guide-heading" className="mt-12 border-t border-white/10 pt-10">
+        <h2 id="download-guide-heading" className="text-xl font-bold tracking-[-0.01em] text-white sm:text-2xl">
+          {page.guideTitle}
+        </h2>
+        <ol className="mt-6 grid gap-4 md:grid-cols-3">
+          {page.steps.map((step, index) => (
+            <li key={step.title} className="rounded-2xl border border-white/10 bg-[#141418] p-5">
+              <span className="flex size-8 items-center justify-center rounded-full border border-[#E60023]/40 bg-[#E60023]/10 text-sm font-semibold text-[#FF7182]">
+                {index + 1}
+              </span>
+              <h3 className="mt-4 text-sm font-semibold text-white">{step.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-zinc-400">{step.description}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section aria-labelledby="download-faq-heading" className="mt-12 border-t border-white/10 pt-10">
+        <h2 id="download-faq-heading" className="text-xl font-bold tracking-[-0.01em] text-white sm:text-2xl">
+          {page.faqTitle}
+        </h2>
+        <div className="mt-5 grid gap-4 md:grid-cols-3">
+          {page.faqs.map((faq) => (
+            <article key={faq.question} className="rounded-2xl border border-white/10 bg-[#141418] p-5">
+              <h3 className="text-sm font-semibold leading-relaxed text-white">{faq.question}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-zinc-400">{faq.answer}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
       {page.pathname === '/how-to-download-pinterest-videos' && (
         <div className="mt-8 rounded-2xl border border-white/10 bg-[#141418] p-6">
           <h3 className="text-base font-semibold text-white">Troubleshooting pin.it links and private Pins</h3>

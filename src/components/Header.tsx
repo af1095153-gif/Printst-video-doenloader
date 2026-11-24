@@ -3,9 +3,10 @@ import { ClipboardPaste } from 'lucide-react';
 
 interface HeaderProps {
   onPasteAction: () => void;
+  actionLabel?: string;
 }
 
-export const Header = memo(function Header({ onPasteAction }: HeaderProps) {
+export const Header = memo(function Header({ onPasteAction, actionLabel = 'Paste Link' }: HeaderProps) {
   return (
     <header className="sticky top-0 z-30 h-14 border-b border-white/10 bg-[#0B0B0E]/90 backdrop-blur-md">
       <div className="mx-auto flex h-full max-w-6xl items-center justify-between gap-8 px-4 sm:px-6">
@@ -47,13 +48,19 @@ export const Header = memo(function Header({ onPasteAction }: HeaderProps) {
             GIF
           </a>
           <a
+            href="/idea-pin-downloader"
+            className="whitespace-nowrap shrink-0 transition-colors hover:text-white hover:underline underline-offset-4"
+          >
+            Idea Pins
+          </a>
+          <a
             href="/how-to-download-pinterest-videos"
             className="whitespace-nowrap shrink-0 transition-colors hover:text-white hover:underline underline-offset-4"
           >
             Guide
           </a>
           <a
-            href="/#browser-extension"
+            href="/extension"
             className="whitespace-nowrap shrink-0 transition-colors hover:text-white hover:underline underline-offset-4"
           >
             Browser Extension
@@ -68,7 +75,7 @@ export const Header = memo(function Header({ onPasteAction }: HeaderProps) {
             className="inline-flex min-h-[40px] items-center gap-2 rounded-lg bg-[#E60023] px-4 py-2 text-xs font-semibold text-white whitespace-nowrap shrink-0 transition-colors hover:bg-[#CC001F] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white cursor-pointer"
           >
             <ClipboardPaste className="h-3.5 w-3.5" aria-hidden="true" />
-            <span>Paste Link</span>
+            <span>{actionLabel}</span>
           </button>
         </div>
       </div>
