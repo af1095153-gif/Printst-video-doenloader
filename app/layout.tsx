@@ -9,7 +9,13 @@ export const metadata: Metadata = {
   title: 'KikPin – Free Pinterest Video, Image & GIF Downloader Online',
   description: siteDescription,
   alternates: { canonical: '/' },
-  icons: { icon: '/icon.png' },
+  icons: {
+    icon: [
+      { url: '/icon.png', type: 'image/png', sizes: '96x96' },
+      { url: '/favicon.ico', type: 'image/x-icon' },
+    ],
+    shortcut: '/favicon.ico',
+  },
   openGraph: {
     title: 'KikPin – Free Pinterest Video, Image & GIF Downloader Online',
     description: siteDescription,
@@ -51,6 +57,7 @@ const structuredData = {
       '@id': 'https://kikpin.me/#website',
       name: 'KikPin',
       url: 'https://kikpin.me',
+      dateModified: '2026-11-25',
       publisher: { '@id': 'https://kikpin.me/#organization' },
     },
     {
@@ -62,6 +69,7 @@ const structuredData = {
       operatingSystem: 'All',
       browserRequirements: 'Requires JavaScript. Works in all modern browsers.',
       description: siteDescription,
+      dateModified: '2026-11-25',
       offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
       publisher: { '@id': 'https://kikpin.me/#organization' },
       isPartOf: { '@id': 'https://kikpin.me/#website' },
