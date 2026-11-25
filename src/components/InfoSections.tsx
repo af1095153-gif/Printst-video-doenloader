@@ -21,11 +21,40 @@ export function HowToSection() {
   );
 }
 
+export function WhoUsesKikPinSection() {
+  const audiences = [
+    { title: 'Pinterest Creators', description: 'Save public video clips, Idea Pins, and carousel assets in original HD, 2K, or 4K quality for editing and inspiration.' },
+    { title: 'Video Editors', description: 'Download clean, watermark-free MP4 reference clips and short-form video inspiration in seconds.' },
+    { title: 'Craft Sellers & DIY Makers', description: 'Keep project tutorials, visual instructions, and handmade product ideas saved offline.' },
+    { title: 'Pinterest Board Curators', description: 'Archive themed multi-image carousels, animated GIFs, and high-resolution Pin collections locally.' },
+    { title: 'Travel Planners', description: 'Save destination imagery, visual itineraries, and trip inspiration Pins for offline viewing.' },
+    { title: 'Creative Educators', description: 'Collect visual examples and reference media for lessons and independent learning materials.' },
+  ];
+
+  return (
+    <section aria-labelledby="who-uses-kikpin-heading" className="mt-16 border-t border-white/10 pt-12">
+      <div className="max-w-2xl">
+        <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#FF3B53]">Made for your workflow</p>
+        <h2 id="who-uses-kikpin-heading" className="mt-2 text-xl font-bold tracking-[-0.01em] text-white sm:text-2xl">Built for Creators, Editors &amp; Curators</h2>
+        <p className="mt-2 text-sm leading-relaxed text-zinc-400">Save public Pinterest media for creative projects, planning, and learning.</p>
+      </div>
+      <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {audiences.map((audience) => (
+          <li key={audience.title} className="rounded-xl border border-white/10 bg-[#141418] p-4 sm:p-5">
+            <h3 className="text-sm font-semibold text-white">{audience.title}</h3>
+            <p className="mt-2 text-sm leading-relaxed text-zinc-400">{audience.description}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
 export function LatestUpdatesSection() {
   const updates = [
-    { date: 'Nov 2026', dateTime: '2026-11', text: 'Added full 1080p HD & Idea Pin audio extraction.' },
-    { date: 'Oct 2026', dateTime: '2026-10', text: 'Improved pin.it short-link speed and mobile Safari support.' },
-    { date: 'Sep 2026', dateTime: '2026-09', text: 'Zero-watermark GIF & high-res cover image downloads live.' },
+    { date: 'Nov 25, 2026', dateTime: '2026-11-25', text: 'Launched dedicated format pages for Pinterest Videos, Images, GIFs, Idea Pins, and Browser Extensions.' },
+    { date: 'Nov 24, 2026', dateTime: '2026-11-24', text: 'Published the official KikPin Microsoft Edge Extension (Manifest V3, activeTab-only, zero data collection).' },
+    { date: 'Nov 2026', dateTime: '2026-11', text: 'Added full 1080p HD, 2K/4K video extraction, Idea Pin audio support, and instant pin.it short-link handling.' },
   ];
 
   return (
@@ -34,6 +63,7 @@ export function LatestUpdatesSection() {
         <div className="max-w-xs">
           <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#FF3B53]">What&apos;s new</p>
           <h2 id="latest-updates-heading" className="mt-1 text-lg font-bold text-white">Latest Updates</h2>
+          <p className="mt-2 text-xs text-zinc-500">Last updated: November 25, 2026</p>
         </div>
         <ul className="grid flex-1 gap-3 text-sm text-zinc-300">
           {updates.map((update) => (
