@@ -61,6 +61,11 @@ export function SiteFooter() {
           Save public Pins in the source quality Pinterest provides. No watermark or login credentials required.
         </p>
       </div>
+      <div className="mx-auto mt-8 flex max-w-6xl justify-center px-4 sm:justify-start sm:px-6">
+        <a href="https://launchbuff.com/products/kikpin-7vt64k" target="_blank" rel="noopener noreferrer" title="Featured on LaunchBuff">
+          <img src="https://launchbuff.com/badge-featured-dark.svg" alt="Featured on LaunchBuff" width="256" height="80" />
+        </a>
+      </div>
     </footer>
   );
 }
