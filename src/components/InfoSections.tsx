@@ -52,9 +52,9 @@ export function WhoUsesKikPinSection() {
 
 export function LatestUpdatesSection() {
   const updates = [
-    { date: 'Nov 25, 2026', dateTime: '2026-11-25', text: 'Launched dedicated format pages for Pinterest Videos, Images, GIFs, Idea Pins, and Browser Extensions.' },
-    { date: 'Nov 24, 2026', dateTime: '2026-11-24', text: 'Published the official KikPin Microsoft Edge Extension (Manifest V3, activeTab-only, zero data collection).' },
-    { date: 'Nov 2026', dateTime: '2026-11', text: 'Added full 1080p HD, 2K/4K video extraction, Idea Pin audio support, and instant pin.it short-link handling.' },
+    { version: 'v1.2', text: 'Manifest V3 Microsoft Edge extension with activeTab-only permissions and one-click downloads.' },
+    { version: 'v1.1', text: 'Idea Pin audio support when provided by the source, plus a pin.it short-link resolver.' },
+    { version: 'v1.0', text: 'Core Pinterest video and image downloader with source-quality HD and 2K/4K extraction when available.' },
   ];
 
   return (
@@ -63,13 +63,12 @@ export function LatestUpdatesSection() {
         <div className="max-w-xs">
           <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#FF3B53]">What&apos;s new</p>
           <h2 id="latest-updates-heading" className="mt-1 text-lg font-bold text-white">Latest Updates</h2>
-          <p className="mt-2 text-xs text-zinc-500">Last updated: November 25, 2026</p>
         </div>
         <ul className="grid flex-1 gap-3 text-sm text-zinc-300">
           {updates.map((update) => (
-            <li key={update.date} className="flex items-start gap-2.5 text-sm sm:gap-3">
+            <li key={update.version} className="flex items-start gap-2.5 text-sm sm:gap-3">
               <span aria-hidden="true" className="mt-1.5 size-1.5 shrink-0 rounded-full bg-[#FF3B53]" />
-              <time dateTime={update.dateTime} className="shrink-0 font-medium text-zinc-100">{update.date}</time>
+              <span className="shrink-0 font-mono font-semibold text-zinc-100">{update.version}</span>
               <span className="leading-relaxed text-zinc-400">{update.text}</span>
             </li>
           ))}
