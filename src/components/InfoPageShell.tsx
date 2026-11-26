@@ -17,6 +17,7 @@ export function InfoPageShell({ eyebrow, title, description, children }: InfoPag
             <span aria-hidden="true" className="flex size-7 items-center justify-center rounded-lg bg-[#E60023] text-sm font-extrabold text-white">K</span>
             <span>KikPin</span>
           </a>
+          <nav aria-label="Primary navigation" className="hidden items-center gap-5 text-sm text-zinc-400 sm:flex"><a href="/pinterest-video-downloader" className="hover:text-white">Video</a><a href="/pinterest-image-downloader" className="hover:text-white">Images</a><a href="/blog" className="hover:text-white">Blog</a><a href="/compare" className="hover:text-white">Compare</a><a href="/extension" className="hover:text-white">Extension</a></nav>
           <a href="/#downloader" className="inline-flex min-h-10 items-center rounded-lg bg-[#E60023] px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-[#CC001F] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">Open Downloader</a>
         </div>
       </header>
@@ -26,7 +27,7 @@ export function InfoPageShell({ eyebrow, title, description, children }: InfoPag
           <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">{title}</h1>
           <p className="mt-3 max-w-2xl text-base leading-relaxed text-zinc-400">{description}</p>
         </header>
-        <div className="mt-10 max-w-3xl space-y-8">{children}</div>
+        <div className="mt-10 max-w-none space-y-8">{children}</div>
       </main>
       <SiteFooter />
     </div>

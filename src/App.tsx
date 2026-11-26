@@ -27,6 +27,7 @@ import {
 import { getSeoPage } from './seoPages';
 import SeoLandingSection from './components/SeoLandingSection';
 import { SiteFooter, ToolLinks } from './components/ToolLinks';
+import { LatestBlog, TrustpilotBadge } from './components/BlogContent';
 
 export default function App({ pathname = '/' }: { pathname?: string }) {
   const seoPage = getSeoPage(pathname);
@@ -244,6 +245,7 @@ export default function App({ pathname = '/' }: { pathname?: string }) {
         </section>
 
         {!seoPage && status === 'idle' && <SampleResultPreview />}
+        {!seoPage && status === 'idle' && <div className="mt-4"><TrustpilotBadge /></div>}
 
         {/* Loading, Error, or Extracted Media Workbench */}
         <MediaResultCard
@@ -275,6 +277,7 @@ export default function App({ pathname = '/' }: { pathname?: string }) {
         />
 
         {!seoPage && <WhoUsesKikPinSection />}
+        {!seoPage && <LatestBlog />}
         {!seoPage && <FaqSection />}
         {seoPage && <ToolLinks />}
           </>

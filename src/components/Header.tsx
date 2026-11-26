@@ -53,6 +53,8 @@ export const Header = memo(function Header({ onPasteAction, actionLabel = 'Paste
           >
             Idea Pins
           </a>
+          <a href="/blog" className="whitespace-nowrap shrink-0 transition-colors hover:text-white hover:underline underline-offset-4">Blog</a>
+          <a href="/compare" className="whitespace-nowrap shrink-0 transition-colors hover:text-white hover:underline underline-offset-4">Compare</a>
           <a
             href="/how-to-download-pinterest-videos"
             className="whitespace-nowrap shrink-0 transition-colors hover:text-white hover:underline underline-offset-4"

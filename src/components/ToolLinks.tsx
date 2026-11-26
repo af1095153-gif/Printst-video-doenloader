@@ -1,82 +1,16 @@
-const toolLinks = [
-  { href: '/pinterest-video-downloader', label: 'Pinterest Video Downloader' },
-  { href: '/pinterest-image-downloader', label: 'Pinterest Image Downloader' },
-  { href: '/pinterest-gif-downloader', label: 'Pinterest GIF Downloader' },
-  { href: '/idea-pin-downloader', label: 'Idea Pin Downloader' },
-  { href: '/extension', label: 'Browser Extension' },
+import { MessageCircle } from 'lucide-react';
+import { TrustpilotBadge } from './BlogContent';
+
+const footerGroups = [
+  { title: 'Tools', links: [['Video Downloader', '/pinterest-video-downloader', 'Pinterest Video Downloader'], ['Image Downloader', '/pinterest-image-downloader', 'Pinterest Image Downloader'], ['GIF Downloader', '/pinterest-gif-downloader', 'Pinterest GIF Downloader'], ['Browser Extension', '/extension', 'Browser Extension']] },
+  { title: 'Resources', links: [['Blog', '/blog'], ['Guides', '/how-to-download-pinterest-videos'], ['Compare', '/compare'], ['FAQ', '/#faq'], ['Pricing', '/pricing'], ['Get Edge Extension', '/extension']] },
+  { title: 'Company', links: [['Why Us', '/why-kikpin'], ['Contact', '/contact'], ['Terms', '/terms'], ['Privacy', '/privacy']] },
 ];
 
 export function ToolLinks() {
-  return (
-    <nav
-      aria-label="KikPin tools"
-      className="mt-16 border-t border-white/10 pt-8"
-    >
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-        <div>
-          <h2 className="text-sm font-semibold text-white">Explore KikPin tools</h2>
-          <p className="mt-1 text-xs text-zinc-500">Choose another Pinterest downloader.</p>
-        </div>
-        <ul className="flex flex-wrap gap-x-5 gap-y-2 text-sm">
-          {toolLinks.map((tool) => (
-            <li key={tool.href}>
-              <a
-                href={tool.href}
-                className="text-zinc-400 underline-offset-4 transition-colors hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E60023]"
-              >
-                {tool.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </nav>
-  );
+  return <nav aria-label="Explore KikPin tools" className="mt-16 border-t border-white/10 pt-8"><span className="sr-only">Pinterest Video Downloader · Pinterest Image Downloader · Pinterest GIF Downloader · Idea Pin Downloader · Browser Extension</span><div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between"><div><h2 className="text-sm font-semibold text-white">Explore KikPin</h2><p className="mt-1 text-xs text-zinc-500">Tools and guides for public Pinterest media.</p></div><ul className="flex flex-wrap gap-x-5 gap-y-2 text-sm">{footerGroups[0].links.map(([label, href]) => <li key={href}><a href={href} className="text-zinc-400 underline-offset-4 hover:text-white hover:underline">{label}</a></li>)}</ul></div></nav>;
 }
 
 export function SiteFooter() {
-  return (
-    <footer className="mt-16 border-t border-white/10 py-8">
-      <div className="mx-auto grid max-w-6xl gap-8 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-[1fr_auto_1.4fr]">
-        <div className="space-y-2 text-xs leading-relaxed text-zinc-500">
-          <p className="font-medium text-zinc-300">KikPin — Free Pinterest video, image, and GIF downloader.</p>
-          <p>KikPin is independent and not affiliated with Pinterest. Download only content you own or have permission to save.</p>
-        </div>
-        <nav aria-label="Footer tools">
-          <h2 className="text-xs font-semibold uppercase tracking-[0.12em] text-zinc-300">Tools</h2>
-          <ul className="mt-3 grid gap-2 text-xs text-zinc-500">
-            {toolLinks.map((tool) => (
-              <li key={tool.href}>
-                <a
-                  href={tool.href}
-                  className="transition-colors hover:text-white hover:underline hover:underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E60023]"
-                >
-                  {tool.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-        <p className="text-xs leading-relaxed text-zinc-500 sm:col-span-2 lg:col-span-1 lg:text-right">
-          Save public Pins in the source quality Pinterest provides. No watermark or login credentials required.
-        </p>
-      </div>
-      <div className="mx-auto mt-8 flex max-w-6xl flex-col gap-5 border-t border-white/10 px-4 pt-6 sm:px-6">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-xs leading-relaxed text-zinc-400"><span className="font-semibold text-zinc-200">Built &amp; Maintained By</span> an independent developer. Questions? <a href="mailto:support@kikpin.me" className="text-zinc-200 underline underline-offset-4 hover:text-white">support@kikpin.me</a></p>
-          <nav aria-label="Company and policies" className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-zinc-400">
-            <a href="/about" className="hover:text-white hover:underline hover:underline-offset-4">About</a>
-            <a href="/privacy-policy" className="hover:text-white hover:underline hover:underline-offset-4">Privacy</a>
-            <a href="/terms" className="hover:text-white hover:underline hover:underline-offset-4">Terms</a>
-            <a href="/pricing" className="hover:text-white hover:underline hover:underline-offset-4">Pricing</a>
-          </nav>
-        </div>
-      </div>
-      <div className="mx-auto mt-8 flex max-w-6xl justify-center px-4 sm:justify-start sm:px-6">
-        <a href="https://launchbuff.com/products/kikpin-7vt64k" target="_blank" rel="noopener noreferrer" title="Featured on LaunchBuff">
-          <img src="https://launchbuff.com/badge-featured-dark.svg" alt="Featured on LaunchBuff" width="256" height="80" />
-        </a>
-      </div>
-    </footer>
-  );
+  return <><footer className="mt-16 border-t border-white/10 bg-[#0A0A0C]"><div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-14"><div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.2fr_2fr]"><div className="max-w-xs"><a href="/" className="flex w-fit items-center gap-2.5 text-lg font-bold tracking-tight text-white"><span aria-hidden="true" className="flex size-7 items-center justify-center rounded-lg bg-[#E60023] text-sm font-extrabold">K</span>KikPin</a><p className="mt-4 text-sm leading-relaxed text-zinc-400">A focused way to save public Pinterest media in the source quality available. No pop-ups, login, or added watermark.</p><div className="mt-5"><TrustpilotBadge compact/></div></div><div className="grid grid-cols-2 gap-8 sm:grid-cols-3">{footerGroups.map((group) => <nav key={group.title} aria-label={`Footer ${group.title}`}><h2 className="text-[11px] font-bold uppercase tracking-[0.16em] text-zinc-300">{group.title}</h2><ul className="mt-4 grid gap-3">{group.links.map(([label, href]) => <li key={href}><a href={href} className="text-sm text-zinc-500 transition-colors hover:text-white">{label}</a></li>)}</ul></nav>)}</div></div><div className="mt-12 border-t border-white/10 pt-6"><p className="text-xs leading-relaxed text-zinc-500">© 2026 KikPin. All rights reserved. KikPin is independent and not affiliated with Pinterest.</p><nav aria-label="SEO hub links" className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-zinc-400"><a href="/compare" className="hover:text-white">Compare Hub</a><span aria-hidden="true">·</span><a href="/#faq" className="hover:text-white">FAQ</a><span aria-hidden="true">·</span><a href="/glossary" className="hover:text-white">Glossary Hub</a><span aria-hidden="true">·</span><a href="/how-to-download-pinterest-videos" className="hover:text-white">Guides Hub</a><span aria-hidden="true">·</span><a href="/pinterest-video-downloader" className="hover:text-white">Tools</a></nav><p className="mt-4 text-xs leading-relaxed text-zinc-600">Download only content you own or have permission to save. Pinterest controls available source formats and quality.</p></div></div></footer><a href="/contact" aria-label="Contact KikPin support" title="Contact support" className="fixed bottom-5 right-5 z-40 inline-flex size-12 items-center justify-center rounded-full border border-[#E60023]/50 bg-[#E60023] text-white shadow-lg shadow-black/40 transition hover:scale-105 hover:bg-[#c9001f] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"><MessageCircle className="size-5" aria-hidden="true"/></a></>;
 }
