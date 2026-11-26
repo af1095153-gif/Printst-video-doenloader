@@ -41,6 +41,10 @@ const requiredSitemap = [
   ['https://kikpin.me/pinterest-gif-downloader', '0.8'],
   ['https://kikpin.me/idea-pin-downloader', '0.8'],
   ['https://kikpin.me/extension', '0.8'],
+  ['https://kikpin.me/about', '0.4'],
+  ['https://kikpin.me/privacy-policy', '0.4'],
+  ['https://kikpin.me/terms', '0.4'],
+  ['https://kikpin.me/pricing', '0.5'],
 ] as const;
 
 test('all media SEO pages expose the requested metadata and three FAQs/steps', () => {
@@ -62,9 +66,11 @@ test('all media SEO pages expose the requested metadata and three FAQs/steps', (
 });
 
 test('Next route metadata includes exact titles, descriptions, and canonical URLs', () => {
+  const staticRoutes = ['/about', '/privacy-policy', '/terms', '/pricing'];
   const routeFiles = [
     ...expectedPages.map(({ route }) => `../app${route}/page.tsx`),
     '../app/extension/page.tsx',
+    ...staticRoutes.map((route) => `../app${route}/page.tsx`),
   ];
   const extensionMetadata = {
     title: 'KikPin Browser Extension — 1-Click Pinterest Video Downloader | KikPin',
@@ -89,7 +95,7 @@ test('Next route metadata includes exact titles, descriptions, and canonical URL
   }
 });
 
-test('Next sitemap lists the six requested URLs with their priorities', () => {
+test('Next sitemap lists public URLs with their priorities', () => {
   const sitemap = readFileSync(new URL('../app/sitemap.ts', import.meta.url), 'utf8');
   for (const [url, priority] of requiredSitemap) {
     const entry = sitemap.split('\n').find((line) => line.includes(`url: '${url}'`));

@@ -61,6 +61,17 @@ export function SiteFooter() {
           Save public Pins in the source quality Pinterest provides. No watermark or login credentials required.
         </p>
       </div>
+      <div className="mx-auto mt-8 flex max-w-6xl flex-col gap-5 border-t border-white/10 px-4 pt-6 sm:px-6">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-xs leading-relaxed text-zinc-400"><span className="font-semibold text-zinc-200">Built &amp; Maintained By</span> an independent developer. Questions? <a href="mailto:support@kikpin.me" className="text-zinc-200 underline underline-offset-4 hover:text-white">support@kikpin.me</a></p>
+          <nav aria-label="Company and policies" className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-zinc-400">
+            <a href="/about" className="hover:text-white hover:underline hover:underline-offset-4">About</a>
+            <a href="/privacy-policy" className="hover:text-white hover:underline hover:underline-offset-4">Privacy</a>
+            <a href="/terms" className="hover:text-white hover:underline hover:underline-offset-4">Terms</a>
+            <a href="/pricing" className="hover:text-white hover:underline hover:underline-offset-4">Pricing</a>
+          </nav>
+        </div>
+      </div>
       <div className="mx-auto mt-8 flex max-w-6xl justify-center px-4 sm:justify-start sm:px-6">
         <a href="https://launchbuff.com/products/kikpin-7vt64k" target="_blank" rel="noopener noreferrer" title="Featured on LaunchBuff">
           <img src="https://launchbuff.com/badge-featured-dark.svg" alt="Featured on LaunchBuff" width="256" height="80" />

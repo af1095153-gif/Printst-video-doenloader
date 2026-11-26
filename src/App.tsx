@@ -14,6 +14,8 @@ import {
   SupportedFormatsSection,
   WhoUsesKikPinSection,
 } from './components/InfoSections';
+import { SustainabilitySection, TrustSignalsSection, WhyKikPinSection } from './components/HomepageTrustSections';
+import { SampleResultPreview } from './components/SampleResultPreview';
 import type { ExtractionStatus, HistoryItem, PinMediaResult } from './types/pinterest';
 import {
   clearStoredHistory,
@@ -220,8 +222,7 @@ export default function App({ pathname = '/' }: { pathname?: string }) {
           <p className="mt-3.5 max-w-2xl text-base leading-relaxed text-zinc-400">
             {seoPage?.lead || (
               <>
-                Save public Pinterest videos, reels, images, GIFs, and carousels—including{' '}
-                <span className="font-mono text-sm text-zinc-200">pin.it</span> links—in the source quality Pinterest provides (HD, 2K, or 4K when available). No watermark or login credentials required.
+                Save public Pinterest videos, Idea Pins with source audio, GIFs, carousels, and HD images—in original 1080p, 2K, or 4K quality when available. Made for creators, video editors, craft sellers, and board curators: no added watermark, pop-up ads, or account required.
               </>
             )}
           </p>
@@ -242,17 +243,7 @@ export default function App({ pathname = '/' }: { pathname?: string }) {
           </div>
         </section>
 
-        <div className="mt-5">
-          <a
-            href="https://microsoftedge.microsoft.com/addons/detail/kikpin-pinterest-video-/kpgnbgodaeeapgnahngpaoijkonoboae"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex max-w-full items-center gap-2.5 rounded-full border border-white/10 bg-[#141418] px-4 py-2.5 text-sm transition-colors hover:border-[#E60023]/50 hover:bg-[#19191e] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E60023]"
-          >
-            <span aria-hidden="true" className="size-2 shrink-0 rounded-full bg-[#E60023]" />
-            <span className="font-medium text-zinc-200">Live on Microsoft Edge · 100% Free &amp; No Watermark</span>
-          </a>
-        </div>
+        {!seoPage && status === 'idle' && <SampleResultPreview />}
 
         {/* Loading, Error, or Extracted Media Workbench */}
         <MediaResultCard
@@ -264,6 +255,9 @@ export default function App({ pathname = '/' }: { pathname?: string }) {
           onReset={handleClear}
         />
 
+        {!seoPage && <WhyKikPinSection />}
+        {!seoPage && <TrustSignalsSection />}
+        {!seoPage && <SustainabilitySection />}
         {!seoPage && <BrowserExtensionSection />}
 
         <LatestUpdatesSection />

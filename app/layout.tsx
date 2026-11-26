@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import '../src/index.css';
 
 const siteDescription =
-  'Download Pinterest videos, images, GIFs, reels, and carousels online for free in HD without watermark using KikPin. Works on mobile and desktop with no login.';
+  'Free Pinterest video, Idea Pin with audio, GIF, carousel, and HD image downloader. Original 1080p, 2K, or 4K when available; no watermark, pop-ups, or login.';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://kikpin.me'),
@@ -45,7 +45,7 @@ const structuredData = {
       alternateName: 'KikPin.me',
       url: 'https://kikpin.me',
       logo: 'https://kikpin.me/icon.png',
-      email: 'contact@kikpin.me',
+      email: 'support@kikpin.me',
       description:
         'KikPin is a free online tool and browser extension for downloading public Pinterest videos, Idea Pins, GIFs, and HD images without watermarks.',
       sameAs: [
@@ -57,7 +57,7 @@ const structuredData = {
       '@id': 'https://kikpin.me/#website',
       name: 'KikPin',
       url: 'https://kikpin.me',
-      dateModified: '2026-11-25',
+      dateModified: '2026-11-26',
       publisher: { '@id': 'https://kikpin.me/#organization' },
     },
     {
@@ -69,7 +69,7 @@ const structuredData = {
       operatingSystem: 'All',
       browserRequirements: 'Requires JavaScript. Works in all modern browsers.',
       description: siteDescription,
-      dateModified: '2026-11-25',
+      dateModified: '2026-11-26',
       offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
       publisher: { '@id': 'https://kikpin.me/#organization' },
       isPartOf: { '@id': 'https://kikpin.me/#website' },
