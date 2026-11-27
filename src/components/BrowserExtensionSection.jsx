@@ -42,6 +42,8 @@ export function BrowserExtensionSection() {
             aria-hidden="true"
             width="24"
             height="24"
+            loading="lazy"
+            decoding="async"
             className="size-6 shrink-0 sm:size-5"
           />
           <span className="whitespace-nowrap">Add to Microsoft Edge</span>
@@ -60,6 +62,8 @@ export function BrowserExtensionSection() {
             aria-hidden="true"
             width="24"
             height="24"
+            loading="lazy"
+            decoding="async"
             className="size-6 shrink-0 sm:size-5"
           />
           <span className="whitespace-nowrap">Add to Firefox</span>
@@ -78,6 +82,8 @@ export function BrowserExtensionSection() {
             aria-hidden="true"
             width="24"
             height="24"
+            loading="lazy"
+            decoding="async"
             className="size-6 shrink-0 sm:size-5"
           />
           <span className="whitespace-nowrap">Chrome Extension</span>

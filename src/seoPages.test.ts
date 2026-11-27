@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { getSeoPage, seoPages } from './seoPages';
-import sitemap from '../app/sitemap.js';
+import { GET as getSitemap } from '../app/sitemap.xml/route.js';
 
 const expectedPages = [
   {
@@ -40,10 +40,10 @@ const requiredSitemap = [
   ['https://kikpin.me/pinterest-video-downloader', '0.9'],
   ['https://kikpin.me/pinterest-image-downloader', '0.8'],
   ['https://kikpin.me/pinterest-gif-downloader', '0.8'],
-  ['https://kikpin.me/idea-pin-downloader', '0.8'],
+  ['https://kikpin.me/pinterest-idea-pin-downloader', '0.8'],
   ['https://kikpin.me/extension', '0.8'],
   ['https://kikpin.me/about', '0.4'],
-  ['https://kikpin.me/privacy-policy', '0.4'],
+  ['https://kikpin.me/privacy', '0.4'],
   ['https://kikpin.me/terms', '0.3'], 
   ['https://kikpin.me/pricing', '0.5'],
 ] as const;
@@ -96,12 +96,19 @@ test('Next route metadata includes exact titles, descriptions, and canonical URL
   }
 });
 
-test('Next sitemap lists public URLs with their priorities', () => {
-  const entries = sitemap();
+test('sitemap responds with valid XML, canonical URLs, and language alternates', async () => {
+  const response = getSitemap();
+  const xml = await response.text();
+  assert.equal(response.headers.get('content-type'), 'application/xml; charset=utf-8');
+  assert.ok(xml.startsWith('<?xml version="1.0" encoding="UTF-8"?>'));
+  assert.ok(xml.includes('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">'));
+  assert.ok(xml.includes('<xhtml:link rel="alternate" hreflang="ru" href="https://kikpin.me/ru" />'));
+  assert.ok(!xml.includes('<loc>https://kikpin.me/idea-pin-downloader</loc>'));
+  assert.ok(!xml.includes('<loc>https://kikpin.me/privacy-policy</loc>'));
+  assert.ok(xml.includes('<loc>https://kikpin.me/privacy</loc>'));
   for (const [url, priority] of requiredSitemap) {
-    const entry = entries.find((item) => item.url === url || item.url === `${url}/`);
-    assert.ok(entry);
-    assert.equal(entry.priority, Number(priority));
+    assert.ok(xml.includes(`<loc>${url}</loc>`));
+    assert.ok(xml.includes(`<priority>${priority}</priority>`));
   }
 });
 
@@ -123,7 +130,7 @@ test('all four media routes reuse the downloader and SEO tool links', () => {
 });
 
 test('extension page highlights the Edge install and the verified privacy model', () => {
-  const extensionSection = readFileSync(new URL('./components/BrowserExtensionSection.tsx', import.meta.url), 'utf8');
+  const extensionSection = readFileSync(new URL('./components/BrowserExtensionSection.jsx', import.meta.url), 'utf8');
   const app = readFileSync(new URL('./App.tsx', import.meta.url), 'utf8');
   const manifest = readFileSync(new URL('../browser-extension/manifest.json', import.meta.url), 'utf8');
   assert.match(extensionSection, /Add to Microsoft Edge/);
@@ -157,7 +164,8 @@ test('Next layout preserves the KikPin typography and theme metadata', () => {
   const layout = readFileSync(new URL('../app/layout.js', import.meta.url), 'utf8');
   assert.match(layout, /fonts\.googleapis\.com/);
   assert.match(layout, /DM\+Sans/);
-  assert.match(layout, /Plus\+Jakarta\+Sans/);
+  assert.match(layout, /DM\+Sans/);
+  assert.doesNotMatch(layout, /Plus\+Jakarta\+Sans|JetBrains\+Mono/);
   assert.match(layout, /themeColor:\s*'#0B0B0E'/);
   assert.match(layout, /metadataBase:\s*new URL\('https:\/\/kikpin\.me'\)/);
 });
