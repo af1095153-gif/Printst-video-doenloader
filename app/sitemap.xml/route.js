@@ -26,7 +26,7 @@ const paths = [
   ['/supported-urls', 'monthly', 0.7],
   ['/extension', 'weekly', 0.8],
   ['/about', 'monthly', 0.4],
-  ['/privacy-policy', 'monthly', 0.4],
+  ['/privacy', 'monthly', 0.4],
   ['/terms', 'yearly', 0.3],
   ['/pricing', 'monthly', 0.5],
   ['/blog', 'weekly', 0.8],

@@ -9,11 +9,11 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'Content-Type',
 };
 
-export async function GET(request: Request) {
+export async function GET(request) {
   const rawUrl = new URL(request.url).searchParams.get('url');
-  if (!rawUrl) {
+  if (!rawUrl || rawUrl.length > 2048) {
     return Response.json(
-      { error: 'Missing required "url" query parameter.' },
+      { error: rawUrl ? 'Pinterest URL is too long.' : 'Missing required "url" query parameter.' },
       { status: 400, headers: corsHeaders },
     );
   }
@@ -22,16 +22,13 @@ export async function GET(request: Request) {
     const media = await extractPinMedia(rawUrl);
     return Response.json(media, { status: 200, headers: corsHeaders });
   } catch (error) {
-    const statusCode = error instanceof PinExtractionError ? error.statusCode : 500;
-    const payload: Record<string, unknown> = {
-      error: error instanceof Error ? error.message : 'Unexpected error extracting Pinterest media.',
-      code: error instanceof PinExtractionError ? error.code : 'EXTRACTION_FAILED',
+    const isPinError = error instanceof PinExtractionError;
+    const payload = {
+      error: isPinError || error instanceof Error ? error.message : 'Unexpected error extracting Pinterest media.',
+      code: isPinError ? error.code : 'EXTRACTION_FAILED',
     };
-    if (error instanceof PinExtractionError && error.debugFoundUrls) {
-      payload.debugFoundUrls = error.debugFoundUrls;
-    }
 
-    return Response.json(payload, { status: statusCode, headers: corsHeaders });
+    return Response.json(payload, { status: isPinError ? error.statusCode : 500, headers: corsHeaders });
   }
 }
 

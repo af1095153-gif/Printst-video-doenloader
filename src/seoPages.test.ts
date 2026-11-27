@@ -43,7 +43,7 @@ const requiredSitemap = [
   ['https://kikpin.me/pinterest-idea-pin-downloader', '0.8'],
   ['https://kikpin.me/extension', '0.8'],
   ['https://kikpin.me/about', '0.4'],
-  ['https://kikpin.me/privacy-policy', '0.4'],
+  ['https://kikpin.me/privacy', '0.4'],
   ['https://kikpin.me/terms', '0.3'], 
   ['https://kikpin.me/pricing', '0.5'],
 ] as const;
@@ -103,8 +103,9 @@ test('sitemap responds with valid XML, canonical URLs, and language alternates',
   assert.ok(xml.startsWith('<?xml version="1.0" encoding="UTF-8"?>'));
   assert.ok(xml.includes('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">'));
   assert.ok(xml.includes('<xhtml:link rel="alternate" hreflang="ru" href="https://kikpin.me/ru" />'));
-  assert.ok(!xml.includes('https://kikpin.me/idea-pin-downloader'));
-  assert.ok(!xml.includes('<loc>https://kikpin.me/privacy</loc>'));
+  assert.ok(!xml.includes('<loc>https://kikpin.me/idea-pin-downloader</loc>'));
+  assert.ok(!xml.includes('<loc>https://kikpin.me/privacy-policy</loc>'));
+  assert.ok(xml.includes('<loc>https://kikpin.me/privacy</loc>'));
   for (const [url, priority] of requiredSitemap) {
     assert.ok(xml.includes(`<loc>${url}</loc>`));
     assert.ok(xml.includes(`<priority>${priority}</priority>`));
@@ -163,7 +164,8 @@ test('Next layout preserves the KikPin typography and theme metadata', () => {
   const layout = readFileSync(new URL('../app/layout.js', import.meta.url), 'utf8');
   assert.match(layout, /fonts\.googleapis\.com/);
   assert.match(layout, /DM\+Sans/);
-  assert.match(layout, /Plus\+Jakarta\+Sans/);
+  assert.match(layout, /DM\+Sans/);
+  assert.doesNotMatch(layout, /Plus\+Jakarta\+Sans|JetBrains\+Mono/);
   assert.match(layout, /themeColor:\s*'#0B0B0E'/);
   assert.match(layout, /metadataBase:\s*new URL\('https:\/\/kikpin\.me'\)/);
 });

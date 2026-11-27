@@ -24,12 +24,46 @@ export const metadata = {
 
 export const viewport = { themeColor: '#0B0B0E', colorScheme: 'dark' };
 
+const sameAs = [
+  'https://microsoftedge.microsoft.com/addons/detail/kikpin-pinterest-video-/kpgnbgodaeeapgnahngpaoijkonoboae',
+  'https://www.crunchbase.com/organization/kikpin',
+];
+const structuredDescription = 'Free, watermark-free Pinterest video (1080p/4K), Idea Pin with audio, GIF, carousel & HD image downloader.';
 const structuredData = {
   '@context': 'https://schema.org',
   '@graph': [
-    { '@type': 'Organization', '@id': 'https://kikpin.me/#organization', name: 'KikPin', alternateName: 'KikPin.me', url: 'https://kikpin.me', logo: 'https://kikpin.me/icon.png', email: 'support@kikpin.me', description: 'KikPin is a free online tool and browser extension for downloading public Pinterest videos, Idea Pins, GIFs, and HD images without watermarks.', sameAs: ['https://microsoftedge.microsoft.com/addons/detail/kikpin-pinterest-video-/kpgnbgodaeeapgnahngpaoijkonoboae'] },
-    { '@type': 'WebSite', '@id': 'https://kikpin.me/#website', name: 'KikPin', url: 'https://kikpin.me', dateModified: '2026-11-26', publisher: { '@id': 'https://kikpin.me/#organization' } },
-    { '@type': 'WebApplication', '@id': 'https://kikpin.me/#webapp', name: 'KikPin - Pinterest Video, Image & GIF Downloader', url: 'https://kikpin.me', applicationCategory: 'MultimediaApplication', operatingSystem: 'All', browserRequirements: 'Requires JavaScript. Works in all modern browsers.', description: siteDescription, dateModified: '2026-11-26', offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }, publisher: { '@id': 'https://kikpin.me/#organization' }, isPartOf: { '@id': 'https://kikpin.me/#website' } },
+    {
+      '@type': 'Organization',
+      '@id': 'https://kikpin.me/#organization',
+      name: 'KikPin',
+      alternateName: 'KikPin.me',
+      url: 'https://kikpin.me',
+      logo: 'https://kikpin.me/icon.png',
+      description: structuredDescription,
+      contactPoint: {
+        '@type': 'ContactPoint',
+        email: 'support@kikpin.me',
+        contactType: 'customer support',
+      },
+      sameAs,
+    },
+    { '@type': 'WebSite', '@id': 'https://kikpin.me/#website', name: 'KikPin', url: 'https://kikpin.me', dateModified: '2026-11-27', publisher: { '@id': 'https://kikpin.me/#organization' } },
+    {
+      '@type': 'WebApplication',
+      '@id': 'https://kikpin.me/#webapp',
+      name: 'KikPin',
+      url: 'https://kikpin.me',
+      logo: 'https://kikpin.me/icon.png',
+      description: structuredDescription,
+      sameAs,
+      applicationCategory: 'MultimediaApplication',
+      operatingSystem: 'All',
+      browserRequirements: 'Requires JavaScript. Works in all modern browsers.',
+      dateModified: '2026-11-27',
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+      publisher: { '@id': 'https://kikpin.me/#organization' },
+      isPartOf: { '@id': 'https://kikpin.me/#website' },
+    },
   ],
 };
 
@@ -41,11 +75,11 @@ export default async function RootLayout({ children }) {
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
       </head>
       <body className="bg-[#0B0B0E] text-[#F4F4F6] antialiased selection:bg-[#E60023]/30 selection:text-white">
         {children}
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
       </body>
     </html>
   );
