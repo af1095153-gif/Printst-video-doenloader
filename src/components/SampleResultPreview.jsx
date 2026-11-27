@@ -28,7 +28,7 @@ export function SampleResultPreview() {
             alt="Video preview from Tastemade's Pendleton Whisky Chicken Fajitas Pin"
             width="480"
             height="270"
-            loading="eager"
+            loading="lazy"
             decoding="async"
             referrerPolicy="no-referrer"
             className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"

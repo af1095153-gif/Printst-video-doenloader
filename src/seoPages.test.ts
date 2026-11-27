@@ -130,7 +130,7 @@ test('all four media routes reuse the downloader and SEO tool links', () => {
 });
 
 test('extension page highlights the Edge install and the verified privacy model', () => {
-  const extensionSection = readFileSync(new URL('./components/BrowserExtensionSection.tsx', import.meta.url), 'utf8');
+  const extensionSection = readFileSync(new URL('./components/BrowserExtensionSection.jsx', import.meta.url), 'utf8');
   const app = readFileSync(new URL('./App.tsx', import.meta.url), 'utf8');
   const manifest = readFileSync(new URL('../browser-extension/manifest.json', import.meta.url), 'utf8');
   assert.match(extensionSection, /Add to Microsoft Edge/);
