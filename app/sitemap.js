@@ -9,12 +9,13 @@ const paths = [
   ['/about', 'monthly', 0.4], ['/privacy-policy', 'monthly', 0.4], ['/terms', 'yearly', 0.3], ['/pricing', 'monthly', 0.5], ['/blog', 'weekly', 0.8], ['/compare', 'monthly', 0.7], ['/why-kikpin', 'monthly', 0.6], ['/glossary', 'monthly', 0.6], ['/privacy', 'yearly', 0.3], ['/contact', 'monthly', 0.4], ['/how-to-download-pinterest-videos', 'monthly', 0.6],
   ['/blog/how-to-download-pinterest-videos-idea-pins-with-audio', 'monthly', 0.7], ['/blog/save-pinterest-content-offline-without-account', 'monthly', 0.7], ['/blog/troubleshooting-pinterest-downloads', 'monthly', 0.7], ['/blog/pinterest-video-quality-720p-1080p-4k', 'monthly', 0.7], ['/blog/understanding-pinterest-file-formats', 'monthly', 0.7],
   ['/blog/save-pinterest-carousels-stories-gifs-hd', 'monthly', 0.7], ['/blog/privacy-first-pinterest-downloader-extension', 'monthly', 0.7],
+  ['/blog/save-pinterest-videos-to-iphone-camera-roll-android-gallery', 'monthly', 0.7, '2026-11-27'],
 ];
 
 export default function sitemap() {
-  return paths.map(([path, changeFrequency, priority]) => ({
+  return paths.map(([path, changeFrequency, priority, lastModifiedDate]) => ({
     url: `${site}${path}`,
-    lastModified,
+    lastModified: lastModifiedDate ? new Date(lastModifiedDate) : lastModified,
     changeFrequency,
     priority,
     ...(path === '' || languages[path.slice(1)] ? { alternates } : {}),
