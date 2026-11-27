@@ -1,20 +1,4 @@
-export interface SeoPage {
-  pathname: string;
-  title: string;
-  description: string;
-  h1: string;
-  eyebrow: string;
-  lead: string;
-  sectionTitle: string;
-  sectionIntro: string;
-  topics: Array<{ title: string; description: string }>;
-  guideTitle: string;
-  steps: Array<{ title: string; description: string }>;
-  faqTitle: string;
-  faqs: Array<{ question: string; answer: string }>;
-}
-
-export const seoPages: Record<string, SeoPage> = {
+export const seoPages = {
   '/pinterest-video-downloader': {
     pathname: '/pinterest-video-downloader',
     title: 'Pinterest Video Downloader — Download 1080p HD MP4 (No Watermark) | KikPin',
@@ -135,6 +119,87 @@ export const seoPages: Record<string, SeoPage> = {
       { question: 'Can I download Idea Pins on a phone?', answer: 'Yes. Use Safari on iPhone or Chrome on Android, paste the public Pin link, and download the available media to your device.' },
     ],
   },
+  '/pinterest-story-downloader': {
+    pathname: '/pinterest-story-downloader',
+    title: 'Pinterest Story Downloader — Save Story Pins in HD Without Watermarks | KikPin',
+    description: 'Download public Pinterest Story Pins in the quality Pinterest provides. Free, no added watermark, no pop-ups, and no login.',
+    h1: 'Pinterest Story Downloader',
+    eyebrow: 'Pinterest Stories · Original Quality',
+    lead: 'Save media from public Pinterest Story Pins in the source quality available. Paste a Pin or pin.it link to preview the available video or image.',
+    sectionTitle: 'Download Pinterest Story Pins in HD',
+    sectionIntro: 'KikPin handles public Story Pins through the same simple paste-and-extract workflow as other Pinterest media.',
+    topics: [
+      { title: 'Public story media', description: 'Extract the source image or video Pinterest makes available for public Story Pins.' },
+      { title: 'No watermark added', description: 'Save available source media without overlaying a KikPin watermark.' },
+      { title: 'Works in your browser', description: 'Use the same downloader on Android, iPhone, Windows, or Mac without an app or account.' },
+    ],
+    guideTitle: 'How to download a Pinterest Story Pin',
+    steps: [
+      { title: 'Copy the public Pin link', description: 'Open the Story Pin in Pinterest and use Share > Copy Link.' },
+      { title: 'Paste the link', description: 'Paste the Pinterest or pin.it URL into KikPin and select Extract Media.' },
+      { title: 'Preview and save', description: 'Review the available source and download the file to your device.' },
+    ],
+    faqTitle: 'Pinterest Story downloader FAQs',
+    faqs: [
+      { question: 'Can KikPin download every Pinterest Story?', answer: 'KikPin can process public Stories only when Pinterest makes the source media accessible. Private, expired, deleted, or restricted content is unavailable.' },
+      { question: 'Will downloads include a watermark?', answer: 'KikPin does not add a watermark. Any watermark already included in the original source remains part of that source.' },
+      { question: 'Does this work on mobile?', answer: 'Yes. Open KikPin in Safari or Chrome, paste the public Story Pin link, and save the available file.' },
+    ],
+  },
+  '/pinterest-carousel-downloader': {
+    pathname: '/pinterest-carousel-downloader',
+    title: 'Pinterest Carousel Downloader — Save Every Slide and Image | KikPin',
+    description: 'Preview and download the available images and clips from a public multi-slide Pinterest carousel. No login or added watermark.',
+    h1: 'Pinterest Carousel Downloader',
+    eyebrow: 'Multi-slide Pins · Images · Clips',
+    lead: 'Save the images or video clips Pinterest exposes from a public multi-slide Pin. Paste its direct URL to review each available item and download the files you need.',
+    sectionTitle: 'Save Pinterest carousel slides individually',
+    sectionIntro: 'When Pinterest exposes multiple media items, KikPin lets you preview the result and select each available slide.',
+    topics: [
+      { title: 'Review every available item', description: 'See the images or clips Pinterest exposes for the public multi-slide Pin.' },
+      { title: 'Download slides one by one', description: 'Use the result selector to save the individual media items available from the source.' },
+      { title: 'Keep the source quality', description: 'Files are delivered in the quality Pinterest provides; KikPin does not upscale or add a watermark.' },
+    ],
+    guideTitle: 'How to download a Pinterest carousel',
+    steps: [
+      { title: 'Copy the carousel link', description: 'Open the public carousel itself and copy its Share link, not the board URL.' },
+      { title: 'Extract its media', description: 'Paste the URL into KikPin and select Extract Media to load the available slides.' },
+      { title: 'Choose each slide', description: 'Preview and download each image or clip you want to keep.' },
+    ],
+    faqTitle: 'Pinterest carousel downloader FAQs',
+    faqs: [
+      { question: 'Can I save every carousel slide?', answer: 'KikPin lists each slide Pinterest exposes to the public page. Some Pins may not expose every item as a separate downloadable file.' },
+      { question: 'Can a carousel contain video clips?', answer: 'Yes. Pinterest may provide image slides, clips, or a mix. The formats available depend on the Pin.' },
+      { question: 'Are the files compressed?', answer: 'KikPin uses the available source files and does not re-encode them. Resolution depends on Pinterest’s source.' },
+    ],
+  },
+  '/pinterest-idea-pin-downloader': {
+    pathname: '/pinterest-idea-pin-downloader',
+    title: 'Pinterest Idea Pin Downloader — Download with Original Audio | KikPin',
+    description: 'Download public Pinterest Idea Pins with original audio when included in the source video. Preview clips and slides; no account or watermark.',
+    h1: 'Pinterest Idea Pin Downloader With Audio',
+    eyebrow: 'Idea Pins · Video Clips · Original Audio',
+    lead: 'Preview and download available clips and images from public Pinterest Idea Pins. Source audio stays with a video when Pinterest includes it in the media.',
+    sectionTitle: 'Download Pinterest Idea Pins with audio',
+    sectionIntro: 'Paste a public Idea Pin URL and review the slides and clips available from its source.',
+    topics: [
+      { title: 'Audio from the source', description: 'Video downloads retain audio when it is included in the media Pinterest provides.' },
+      { title: 'Individual slides and clips', description: 'Select from the images and videos exposed for the multi-page Idea Pin.' },
+      { title: 'No login or watermark', description: 'Use KikPin in a browser and save available public media without account setup.' },
+    ],
+    guideTitle: 'How to download an Idea Pin',
+    steps: [
+      { title: 'Copy the Pin URL', description: 'Open the public Idea Pin and choose Share > Copy Link.' },
+      { title: 'Paste and extract', description: 'Paste its URL in the downloader above to load the source media.' },
+      { title: 'Pick the clip or slide', description: 'Review available items and download the one you need; source audio is preserved when present.' },
+    ],
+    faqTitle: 'Pinterest Idea Pin downloader FAQs',
+    faqs: [
+      { question: 'Will the original audio be kept?', answer: 'Yes, when the audio is present in Pinterest’s source video. KikPin cannot add audio that is absent from the source.' },
+      { question: 'Can I download separate Idea Pin slides?', answer: 'KikPin displays the slides Pinterest exposes as individual media items so you can select an available clip or image.' },
+      { question: 'Can I download Idea Pins on a phone?', answer: 'Yes. Use KikPin in Safari or Chrome, paste the public link, and save the available media.' },
+    ],
+  },
   '/how-to-download-pinterest-videos': {
     pathname: '/how-to-download-pinterest-videos',
     title: 'How to Download Pinterest Videos – iPhone, Android & PC',
@@ -167,6 +232,6 @@ export const seoPages: Record<string, SeoPage> = {
   },
 };
 
-export function getSeoPage(pathname: string): SeoPage | null {
+export function getSeoPage(pathname) {
   return seoPages[pathname] || null;
 }
