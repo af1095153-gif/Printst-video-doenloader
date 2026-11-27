@@ -164,16 +164,15 @@ export default function App({ pathname = '/' }: { pathname?: string }) {
 
   return (
     <div className="min-h-screen bg-[#0B0B0E] text-[#F4F4F6]">
-      <Header
-        onPasteAction={
+      <Header {...{
+        onPasteAction:
           pathname === '/extension'
             ? () => {
                 window.location.href = '/pinterest-video-downloader#downloader';
               }
-            : handlePasteFromClipboard
-        }
-        actionLabel={pathname === '/extension' ? 'Open Downloader' : undefined}
-      />
+            : handlePasteFromClipboard,
+        actionLabel: pathname === '/extension' ? 'Open Downloader' : undefined,
+      }} />
 
       <main className="mx-auto max-w-6xl px-4 pt-10 sm:px-6 sm:pt-14">
         {pathname === '/extension' ? (

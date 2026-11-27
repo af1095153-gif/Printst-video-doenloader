@@ -134,7 +134,7 @@ export function MediaResultCard({
           : activeMediaUrl.toLowerCase().includes('.webp')
             ? 'webp'
             : 'jpg';
-    const filename = `pinterest-media-${Date.now()}.${ext}`;
+    const filename = `KikPin.me-pinterest-${activeType === 'video' ? 'video' : 'media'}-${Date.now()}.${ext}`;
 
     try {
       const response = await fetch(proxyUrl);

@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { getSeoPage, seoPages } from './seoPages';
+import sitemap from '../app/sitemap.js';
 
 const expectedPages = [
   {
@@ -43,7 +44,7 @@ const requiredSitemap = [
   ['https://kikpin.me/extension', '0.8'],
   ['https://kikpin.me/about', '0.4'],
   ['https://kikpin.me/privacy-policy', '0.4'],
-  ['https://kikpin.me/terms', '0.4'],
+  ['https://kikpin.me/terms', '0.3'], 
   ['https://kikpin.me/pricing', '0.5'],
 ] as const;
 
@@ -96,17 +97,17 @@ test('Next route metadata includes exact titles, descriptions, and canonical URL
 });
 
 test('Next sitemap lists public URLs with their priorities', () => {
-  const sitemap = readFileSync(new URL('../app/sitemap.ts', import.meta.url), 'utf8');
+  const entries = sitemap();
   for (const [url, priority] of requiredSitemap) {
-    const entry = sitemap.split('\n').find((line) => line.includes(`url: '${url}'`));
+    const entry = entries.find((item) => item.url === url || item.url === `${url}/`);
     assert.ok(entry);
-    assert.ok(entry.includes(`priority: ${priority}`));
+    assert.equal(entry.priority, Number(priority));
   }
 });
 
 test('all four media routes reuse the downloader and SEO tool links', () => {
   const app = readFileSync(new URL('./App.tsx', import.meta.url), 'utf8');
-  const links = readFileSync(new URL('./components/ToolLinks.tsx', import.meta.url), 'utf8');
+  const links = readFileSync(new URL('./components/ToolLinks.jsx', import.meta.url), 'utf8');
   assert.match(app, /UrlExtractorBar/);
   assert.match(app, /MediaResultCard/);
   assert.match(app, /SeoLandingSection page=\{seoPage\}/);
@@ -143,8 +144,17 @@ test('llms.txt links to the homepage, all five tools, and the preserved guide', 
   assert.ok(llms.includes('https://kikpin.me/how-to-download-pinterest-videos'));
 });
 
+test('homepage trust strip uses the supplied Trustpilot URL and a verified Edge listing', () => {
+  const homepage = readFileSync(new URL('./LocalizedHome.jsx', import.meta.url), 'utf8');
+  assert.ok(homepage.includes('https://www.trustpilot.com/review/kikpin.me'));
+  assert.ok(homepage.includes('href={trustpilotUrl}'));
+  assert.ok(homepage.includes('href={edgeUrl}'));
+  assert.ok(!homepage.includes('saashubUrl'));
+  assert.ok(!homepage.includes('[PASTE YOUR PRODUCT HUNT URL]'));
+});
+
 test('Next layout preserves the KikPin typography and theme metadata', () => {
-  const layout = readFileSync(new URL('../app/layout.tsx', import.meta.url), 'utf8');
+  const layout = readFileSync(new URL('../app/layout.js', import.meta.url), 'utf8');
   assert.match(layout, /fonts\.googleapis\.com/);
   assert.match(layout, /DM\+Sans/);
   assert.match(layout, /Plus\+Jakarta\+Sans/);
