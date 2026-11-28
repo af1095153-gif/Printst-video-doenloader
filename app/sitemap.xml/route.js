@@ -45,13 +45,20 @@ const paths = [
   ['/blog/save-pinterest-videos-to-iphone-camera-roll-android-gallery', 'monthly', 0.7],
   ['/blog/is-it-legal-safe-to-download-pinterest-videos', 'monthly', 0.8, '2026-11-28'],
 ];
+const toolPaths = [
+  ['/tools', 'weekly', 0.8, '2026-11-27'],
+  ['/tools/pinterest-font-generator', 'weekly', 0.7, '2026-11-27'],
+  ['/tools/pinterest-image-resizer', 'weekly', 0.7, '2026-11-27'],
+  ['/tools/pinterest-color-palette-generator', 'weekly', 0.7, '2026-11-27'],
+  ['/tools/pinterest-character-counter', 'weekly', 0.7, '2026-11-27'],
+];
 
 function xmlEscape(value) {
   return value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&apos;');
 }
 
 export function GET() {
-  const entries = paths.map(([path, changeFrequency, priority, pageLastModified = lastModified]) => {
+  const entries = [...paths, ...toolPaths].map(([path, changeFrequency, priority, pageLastModified = lastModified]) => {
     const url = `${site}${path}`;
     const alternateLinks = path === '' || Object.values(languages).includes(url)
       ? Object.entries({ ...languages, 'x-default': `${site}/` })
