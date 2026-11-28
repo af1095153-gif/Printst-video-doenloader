@@ -181,7 +181,7 @@ export default function App({ pathname = '/' }: { pathname?: string }) {
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#FF7182]">KikPin for your browser</p>
               <h1 className="mt-2.5 text-3xl font-extrabold tracking-[-0.015em] text-white sm:text-5xl text-balance">KikPin Browser Extension</h1>
               <p className="mt-3.5 max-w-2xl text-base leading-relaxed text-zinc-400">
-                Download public Pinterest videos in one click with the free KikPin extension. Install the Microsoft Edge version below; Firefox and Chrome listings are coming soon.
+                Download public Pinterest videos with the free KikPin extension. Choose the official Microsoft Edge or Firefox add-on below.
               </p>
             </section>
 

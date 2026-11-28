@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" fill="none">
+  <rect width="1200" height="675" rx="28" fill="#0B0B0E"/>
+  <path d="M0 510H1200" stroke="#FFFFFF" stroke-opacity=".08"/>
+  <path d="M820 0V675" stroke="#FFFFFF" stroke-opacity=".08"/>
+  <circle cx="948" cy="162" r="168" fill="#E60023" fill-opacity=".07"/>
+  <circle cx="948" cy="162" r="112" stroke="#E60023" stroke-opacity=".28"/>
+  <circle cx="948" cy="162" r="68" stroke="#FFFFFF" stroke-opacity=".12"/>
+  <rect x="82" y="88" width="132" height="30" rx="15" fill="#151518" stroke="#FFFFFF" stroke-opacity=".12"/>
+  <circle cx="101" cy="103" r="4" fill="#E60023"/>
+  <text x="116" y="108" fill="#B8B8C0" font-family="Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="1.2">KIKPIN FIELD NOTES</text>
+  <text x="82" y="210" fill="#F4F4F6" font-family="Arial, sans-serif" font-size="50" font-weight="700">Pinterest video</text>
+  <text x="82" y="270" fill="#F4F4F6" font-family="Arial, sans-serif" font-size="50" font-weight="700">downloads, plainly</text>
+  <text x="82" y="322" fill="#A1A1AA" font-family="Arial, sans-serif" font-size="20">Notifications, copyright, safety, and what right-click misses.</text>
+  <rect x="82" y="386" width="252" height="54" rx="12" fill="#141418" stroke="#FFFFFF" stroke-opacity=".12"/>
+  <circle cx="109" cy="413" r="9" stroke="#E60023" stroke-width="2"/>
+  <path d="M105 413h8m-4-4v8" stroke="#E60023" stroke-width="1.6" stroke-linecap="round"/>
+  <text x="132" y="419" fill="#E4E4E7" font-family="Arial, sans-serif" font-size="16" font-weight="600">Public link · personal reference</text>
+  <rect x="82" y="454" width="252" height="40" rx="10" fill="#0B0B0E" stroke="#FFFFFF" stroke-opacity=".1"/>
+  <text x="102" y="479" fill="#71717A" font-family="Arial, sans-serif" font-size="13">Know the source. Respect the creator.</text>
+  <rect x="899" y="112" width="98" height="98" rx="24" fill="#151518" stroke="#FFFFFF" stroke-opacity=".16"/>
+  <path d="M930 142h37l12 12v26h-49z" stroke="#E4E4E7" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M967 142v13h12M938 165h20m-20 8h14" stroke="#71717A" stroke-width="2" stroke-linecap="round"/>
+  <path d="M959 220v39m0 0-12-12m12 12 12-12" stroke="#E60023" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="899" y="270" width="98" height="68" rx="16" fill="#151518" stroke="#FFFFFF" stroke-opacity=".16"/>
+  <rect x="916" y="286" width="64" height="36" rx="8" stroke="#A1A1AA" stroke-width="2"/>
+  <path d="m943 296 14 8-14 8v-16z" fill="#E60023"/>
+  <text x="850" y="400" fill="#71717A" font-family="Arial, sans-serif" font-size="13" letter-spacing="2">PRIVATE NOTES</text>
+  <text x="850" y="426" fill="#D4D4D8" font-family="Arial, sans-serif" font-size="16" font-weight="600">not a repost license</text>
+  <text x="82" y="594" fill="#71717A" font-family="Arial, sans-serif" font-size="13">KIKPIN.ME</text>
+  <text x="1100" y="594" text-anchor="end" fill="#71717A" font-family="Arial, sans-serif" font-size="13">COPYRIGHT &amp; SAFETY</text>
+</svg>

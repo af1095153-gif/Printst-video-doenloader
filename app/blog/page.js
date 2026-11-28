@@ -2,8 +2,8 @@ import { BlogIndex } from '../../src/components/BlogContent';
 import { InfoPageShell } from '../../src/components/InfoPageShell';
 
 export const metadata = {
-  title: 'Pinterest download guides and troubleshooting | KikPin Blog',
-  description: 'Practical guides for downloading Pinterest videos, Idea Pins, images, and GIFs, understanding quality, and fixing common issues.',
+  title: 'Pinterest download guides, copyright & troubleshooting | KikPin',
+  description: 'Straight answers on saving Pinterest videos, audio, phone downloads, copyright, creator notifications, and common download problems.',
   alternates: { canonical: 'https://kikpin.me/blog' },
 };
 
