@@ -1,11 +1,11 @@
 import { headers } from 'next/headers';
 import '../src/index.css';
 
-const siteDescription = 'Free Pinterest video, Idea Pin with audio, GIF, carousel, and HD image downloader. Original 1080p, 2K, or 4K when available; no watermark, pop-ups, or login.';
+const siteDescription = 'Save public Pinterest videos, Idea Pins, GIFs, carousels, and images. No login or pop-up ads. KikPin provides the best source file Pinterest makes available.';
 
 export const metadata = {
   metadataBase: new URL('https://kikpin.me'),
-  title: 'KikPin – Free Pinterest Video, Image & GIF Downloader Online',
+  title: 'KikPin — Pinterest Video, Image & GIF Downloader',
   description: siteDescription,
   alternates: { canonical: '/' },
   icons: {
@@ -13,19 +13,20 @@ export const metadata = {
     shortcut: '/favicon.ico',
   },
   openGraph: {
-    title: 'KikPin – Free Pinterest Video, Image & GIF Downloader Online',
+    title: 'KikPin — Pinterest Video, Image & GIF Downloader',
     description: siteDescription,
     type: 'website',
     url: 'https://kikpin.me/',
     siteName: 'KikPin',
   },
-  twitter: { card: 'summary_large_image', title: 'KikPin – Free Pinterest Video, Image & GIF Downloader Online', description: siteDescription },
+  twitter: { card: 'summary_large_image', title: 'KikPin — Pinterest Video, Image & GIF Downloader', description: siteDescription },
 };
 
 export const viewport = { themeColor: '#0B0B0E', colorScheme: 'dark' };
 
 const sameAs = [
   'https://microsoftedge.microsoft.com/addons/detail/kikpin-pinterest-video-/kpgnbgodaeeapgnahngpaoijkonoboae',
+  'https://addons.mozilla.org/addon/kikpin-pinterest-downloader/',
   'https://www.crunchbase.com/organization/kikpin',
 ];
 const structuredDescription = 'Free, watermark-free Pinterest video (1080p/4K), Idea Pin with audio, GIF, carousel & HD image downloader.';

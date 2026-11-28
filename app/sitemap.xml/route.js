@@ -43,6 +43,7 @@ const paths = [
   ['/blog/save-pinterest-carousels-stories-gifs-hd', 'monthly', 0.7],
   ['/blog/privacy-first-pinterest-downloader-extension', 'monthly', 0.7],
   ['/blog/save-pinterest-videos-to-iphone-camera-roll-android-gallery', 'monthly', 0.7],
+  ['/blog/is-it-legal-safe-to-download-pinterest-videos', 'monthly', 0.8, '2026-11-28'],
 ];
 
 function xmlEscape(value) {
@@ -50,7 +51,7 @@ function xmlEscape(value) {
 }
 
 export function GET() {
-  const entries = paths.map(([path, changeFrequency, priority]) => {
+  const entries = paths.map(([path, changeFrequency, priority, pageLastModified = lastModified]) => {
     const url = `${site}${path}`;
     const alternateLinks = path === '' || Object.values(languages).includes(url)
       ? Object.entries({ ...languages, 'x-default': `${site}/` })
@@ -61,7 +62,7 @@ export function GET() {
     return [
       '  <url>',
       `    <loc>${xmlEscape(url)}</loc>`,
-      `    <lastmod>${lastModified}</lastmod>`,
+      `    <lastmod>${pageLastModified}</lastmod>`,
       `    <changefreq>${changeFrequency}</changefreq>`,
       `    <priority>${Number(priority).toFixed(1)}</priority>`,
       alternateLinks,
