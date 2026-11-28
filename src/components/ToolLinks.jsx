@@ -3,7 +3,7 @@ import { languages } from '../../lib/i18n.js';
 import { TrustpilotBadge } from './BlogContent';
 
 const footerGroups = [
-  { title: 'TOOLS', links: [['Video Downloader', '/pinterest-video-downloader'], ['Image Downloader', '/pinterest-image-downloader'], ['GIF Downloader', '/pinterest-gif-downloader'], ['Story Downloader', '/pinterest-story-downloader'], ['Carousel Downloader', '/pinterest-carousel-downloader'], ['Idea Pin Downloader', '/pinterest-idea-pin-downloader'], ['Browser Extension', '/extension']] },
+  { title: 'TOOLS', links: [['Video Downloader', '/pinterest-video-downloader'], ['Image Downloader', '/pinterest-image-downloader'], ['GIF Downloader', '/pinterest-gif-downloader'], ['Story Downloader', '/pinterest-story-downloader'], ['Carousel Downloader', '/pinterest-carousel-downloader'], ['Idea Pin Downloader', '/pinterest-idea-pin-downloader'], ['Browser Extension', '/extension'], ['Free Tools', '/tools']] },
   { title: 'RESOURCES', links: [['Blog', '/blog'], ['Guides', '/how-to-download-pinterest-videos'], ['Supported URLs', '/supported-urls'], ['Compare', '/compare'], ['Glossary', '/glossary'], ['Pricing', '/pricing'], ['FAQ', '/#faq']] },
   { title: 'COMPANY', links: [['Why Us', '/why-kikpin'], ['Contact', '/contact'], ['Terms', '/terms'], ['Privacy', '/privacy']] },
 ];
